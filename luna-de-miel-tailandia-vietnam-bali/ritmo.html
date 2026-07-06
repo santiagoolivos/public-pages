@@ -1,0 +1,603 @@
+<title>Recorrido, ritmo y hoteles — Tailandia · Vietnam · Camboya · Bali</title>
+<style>
+  :root{
+    --sand:#efe7d8;
+    --sand-2:#e6dac2;
+    --ink:#2a2420;
+    --ink-soft:#6b6154;
+    --clay:#b15e3d;
+    --clay-deep:#8a4527;
+    --teal:#2e6b66;
+    --teal-deep:#1f4a46;
+    --gold:#c9a24b;
+    --line:#d9cbab;
+  }
+
+  *{box-sizing:border-box;}
+
+  body{
+    background:var(--sand);
+    color:var(--ink);
+    font-family:"Big Caslon","Didot","Iowan Old Style",Georgia,serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  .doc{max-width:920px;margin:0 auto;padding:52px 26px 90px;}
+  .sans{font-family:"Avenir Next","Century Gothic","Segoe UI",Helvetica,Arial,sans-serif;}
+  .mono{font-family:ui-monospace,"SF Mono",Consolas,Menlo,monospace;font-variant-numeric:tabular-nums;}
+
+  img{max-width:100%;display:block;}
+
+  /* ---------- Header ---------- */
+  .eyebrow{
+    font-family:"Avenir Next","Segoe UI",sans-serif;
+    font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--clay-deep);font-weight:700;margin:0 0 10px;
+  }
+  h1{
+    font-size:clamp(28px,4.4vw,42px);line-height:1.1;margin:0 0 14px;
+    color:var(--teal-deep);text-wrap:balance;font-weight:600;letter-spacing:-.01em;
+  }
+  .dek{font-size:16px;color:var(--ink-soft);max-width:62ch;margin:0 0 26px;}
+
+  /* Hero photo strip */
+  .hero-strip{
+    display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:6px;
+    margin-bottom:34px;border-radius:2px;overflow:hidden;
+  }
+  .hero-strip img{width:100%;height:230px;object-fit:cover;}
+  .hero-strip figure{margin:0;position:relative;}
+  .hero-strip figcaption{
+    position:absolute;bottom:0;left:0;right:0;
+    background:linear-gradient(transparent,rgba(20,15,10,.75));
+    color:#f2ead8;font-family:"Avenir Next","Segoe UI",sans-serif;
+    font-size:11px;letter-spacing:.03em;padding:20px 10px 8px;
+  }
+  @media (max-width:640px){
+    .hero-strip{grid-template-columns:1fr 1fr;}
+    .hero-strip figure:first-child{grid-column:span 2;}
+  }
+
+  /* ---------- Section headings ---------- */
+  h2{font-size:22px;color:var(--teal-deep);margin:50px 0 6px;font-weight:600;}
+  .section-note{
+    font-family:"Avenir Next","Segoe UI",sans-serif;font-size:13px;
+    color:var(--ink-soft);margin:0 0 20px;max-width:66ch;
+  }
+
+  /* ---------- Stat cards ---------- */
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin:18px 0 8px;}
+  .stat{background:var(--sand);padding:18px 14px;text-align:center;}
+  .stat-label{font-family:"Avenir Next","Segoe UI",sans-serif;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);margin:0 0 8px;}
+  .stat-value{font-family:ui-monospace,"SF Mono",Consolas,monospace;font-size:24px;font-weight:600;color:var(--teal-deep);display:block;font-variant-numeric:tabular-nums;}
+  @media (max-width:640px){.stats{grid-template-columns:1fr 1fr;}}
+
+  /* ---------- Timeline ---------- */
+  .timeline-legend{
+    display:flex;gap:18px;flex-wrap:wrap;font-family:"Avenir Next","Segoe UI",sans-serif;
+    font-size:12px;color:var(--ink-soft);margin:20px 0 16px;
+  }
+  .timeline-legend span{display:inline-flex;align-items:center;gap:6px;}
+  .swatch{width:11px;height:11px;border-radius:2px;display:inline-block;}
+  .sw-viaje{background:#9a9184;}
+  .sw-descanso{background:var(--teal);}
+  .sw-intenso{background:var(--gold);}
+  .sw-muyintenso{background:var(--clay);}
+
+  .timeline{display:flex;gap:8px;overflow-x:auto;padding-bottom:10px;}
+  .segment{flex:0 0 auto;min-width:64px;}
+  .segment-city{
+    font-family:"Avenir Next","Segoe UI",sans-serif;font-size:10.5px;font-weight:700;
+    letter-spacing:.03em;color:var(--teal-deep);margin-bottom:6px;white-space:nowrap;
+  }
+  .segment-days{display:flex;gap:3px;}
+  .day-chip{
+    width:22px;height:34px;border-radius:3px;position:relative;
+    display:flex;align-items:flex-end;justify-content:center;
+  }
+  .day-chip span{
+    font-family:ui-monospace,monospace;font-size:9px;color:rgba(0,0,0,.45);
+    padding-bottom:2px;
+  }
+  .chip-viaje{background:#9a9184;}
+  .chip-descanso{background:var(--teal);}
+  .chip-intenso{background:var(--gold);}
+  .chip-muyintenso{background:var(--clay);}
+  .day-chip.has-guide::after{
+    content:"";position:absolute;top:3px;right:3px;
+    width:5px;height:5px;border-radius:50%;
+    background:#fff;box-shadow:0 0 0 1px rgba(0,0,0,.25);
+  }
+  .sw-guide{width:8px;height:8px;border-radius:50%;background:#fff;box-shadow:0 0 0 1.5px rgba(0,0,0,.4);display:inline-block;}
+
+  /* ---------- Transfer duration table ---------- */
+  .table-wrap{overflow-x:auto;margin:0 0 8px;}
+  table.transfers{
+    width:100%;border-collapse:collapse;font-family:"Avenir Next","Segoe UI",sans-serif;
+    font-size:13px;min-width:660px;
+  }
+  table.transfers thead th{
+    text-align:left;font-size:10px;letter-spacing:.06em;text-transform:uppercase;
+    color:var(--ink-soft);font-weight:700;padding:0 10px 8px 0;border-bottom:1.5px solid var(--teal-deep);
+  }
+  table.transfers tbody td{padding:9px 10px 9px 0;border-bottom:1px solid var(--line);vertical-align:top;}
+  table.transfers tbody tr:last-child td{border-bottom:1px solid var(--teal-deep);}
+  table.transfers td.num{text-align:right;font-family:ui-monospace,monospace;font-variant-numeric:tabular-nums;white-space:nowrap;}
+  table.transfers td.day-num{font-family:ui-monospace,monospace;color:var(--ink-soft);}
+  table.transfers .border-flag{color:var(--clay-deep);font-weight:700;}
+  table.transfers tfoot td{padding:12px 10px 0 0;font-weight:700;border-top:2px solid var(--teal-deep);border-bottom:none;}
+
+  /* ---------- Verdict / callout boxes ---------- */
+  .callout{
+    background:var(--sand-2);border:1px solid var(--line);border-top:3px solid var(--teal);
+    padding:22px 26px;margin:22px 0 40px;
+  }
+  .callout.warn{border-top-color:var(--clay);}
+  .callout h3{font-size:17px;margin:0 0 10px;color:var(--teal-deep);}
+  .callout.warn h3{color:var(--clay-deep);}
+  .callout p{margin:0 0 12px;font-size:15px;}
+  .callout p:last-child{margin-bottom:0;}
+  .callout ul{margin:0;padding-left:20px;font-size:14.5px;}
+  .callout li{margin-bottom:10px;}
+  .callout li:last-child{margin-bottom:0;}
+
+  /* ---------- Hotel grid ---------- */
+  .hotel-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin:20px 0;}
+  @media (max-width:640px){.hotel-grid{grid-template-columns:1fr;}}
+  .hotel-card{background:#fff;border:1px solid var(--line);overflow:hidden;}
+  .hotel-card img{width:100%;height:150px;object-fit:cover;}
+  .hotel-body{padding:14px 16px 16px;}
+  .hotel-top{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:4px;}
+  .hotel-city{
+    font-family:"Avenir Next","Segoe UI",sans-serif;font-size:10.5px;font-weight:700;
+    letter-spacing:.06em;text-transform:uppercase;color:var(--clay-deep);
+  }
+  .hotel-nights{font-family:ui-monospace,monospace;font-size:11px;color:var(--ink-soft);}
+  .hotel-name{font-size:17px;font-weight:600;color:var(--ink);margin:0 0 4px;}
+  .hotel-room{font-family:"Avenir Next","Segoe UI",sans-serif;font-size:11.5px;color:var(--ink-soft);margin:0 0 10px;}
+  .hotel-note{font-family:"Avenir Next","Segoe UI",sans-serif;font-size:13px;color:var(--ink);line-height:1.55;}
+  .hotel-note strong{color:var(--clay-deep);}
+  .tag{
+    display:inline-block;font-family:"Avenir Next","Segoe UI",sans-serif;font-size:10px;
+    font-weight:700;letter-spacing:.04em;text-transform:uppercase;
+    padding:2px 8px;border-radius:20px;margin-bottom:8px;
+  }
+  .tag-best{background:#e4ecdc;color:#4a6b2f;}
+  .tag-watch{background:#f3ddd0;color:var(--clay-deep);}
+
+  /* ---------- Activity gallery ---------- */
+  .activity-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin:20px 0;}
+  @media (max-width:640px){.activity-grid{grid-template-columns:1fr;}}
+  .activity-card{background:#fff;border:1px solid var(--line);overflow:hidden;}
+  .activity-card img{width:100%;height:180px;object-fit:cover;}
+  .activity-body{padding:14px 16px 16px;}
+  .activity-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:6px;}
+  .activity-name{font-size:17px;font-weight:600;color:var(--ink);margin:0;}
+  .activity-day{font-family:"Avenir Next","Segoe UI",sans-serif;font-size:11px;color:var(--ink-soft);white-space:nowrap;}
+  .intensity-chip{
+    display:inline-block;font-family:"Avenir Next","Segoe UI",sans-serif;font-size:10px;
+    font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:#fff;
+    padding:3px 9px;border-radius:20px;margin-bottom:8px;
+  }
+  .ic-intenso{background:var(--gold);color:#4a3a10;}
+  .ic-muyintenso{background:var(--clay);}
+  .activity-note{font-family:"Avenir Next","Segoe UI",sans-serif;font-size:13px;color:var(--ink);line-height:1.55;}
+
+  hr.rule{border:none;border-top:1px dashed var(--line);margin:44px 0;}
+
+  .sources{font-family:"Avenir Next","Segoe UI",sans-serif;font-size:12px;color:var(--ink-soft);line-height:1.7;}
+  .sources li{margin-bottom:4px;}
+</style>
+
+<div style="max-width:920px;margin:0 auto;padding:16px 26px 0;font-family:'Avenir Next','Segoe UI',sans-serif;font-size:12.5px;display:flex;gap:18px;flex-wrap:wrap;">
+  <a href="index.html" style="color:#2e6b66;text-decoration:none;font-weight:700;">&larr; Volver al inicio</a>
+  <a href="presupuesto.html" style="color:#b15e3d;text-decoration:none;font-weight:700;">Ver análisis de presupuesto &rarr;</a>
+</div>
+<div class="doc">
+
+  <p class="eyebrow">Análisis de recorrido · 27 días · 4 países</p>
+  <h1>¿Qué tan intenso es este viaje?</h1>
+  <p class="dek">Ritmo día a día, calidad de los 10 hoteles cotizados y evaluación de templos y actividades — más allá de lo que cuesta, cómo se va a sentir vivirlo.</p>
+
+  <div class="hero-strip">
+    <figure><img src="images/img_angkorwat.jpg" alt="Angkor Wat"><figcaption>Angkor Wat, Siem Reap</figcaption></figure>
+    <figure><img src="images/img_elephant.jpg" alt="Santuario de elefantes"><figcaption>Santuario, Chiang Mai</figcaption></figure>
+    <figure><img src="images/img_tanahlot.jpg" alt="Tanah Lot"><figcaption>Tanah Lot, Bali</figcaption></figure>
+  </div>
+
+  <h2>El ritmo en números</h2>
+  <p class="section-note">Clasificando cada uno de los 27 días según cuánto exige del cuerpo y de la logística — no según cuánto cuesta.</p>
+  <div class="stats">
+    <div class="stat"><p class="stat-label">Días de traslado puro</p><span class="stat-value">9</span></div>
+    <div class="stat"><p class="stat-label">Días libres / playa</p><span class="stat-value">10</span></div>
+    <div class="stat"><p class="stat-label">Días intensos</p><span class="stat-value">4</span></div>
+    <div class="stat"><p class="stat-label">Días muy intensos</p><span class="stat-value">4</span></div>
+    <div class="stat"><p class="stat-label">Días con guía español</p><span class="stat-value">9</span></div>
+    <div class="stat"><p class="stat-label">Días sin ningún guía</p><span class="stat-value">17</span></div>
+    <div class="stat"><p class="stat-label">Horas en tránsito*</p><span class="stat-value">~32h</span></div>
+    <div class="stat"><p class="stat-label">Fronteras cruzadas</p><span class="stat-value">3</span></div>
+  </div>
+  <p class="section-note" style="margin-top:14px;">En números redondos: <strong>70% del viaje es traslado o descanso</strong>, y solo <strong>30% son días de actividad fuerte</strong>. En el papel, 10 hoteles y 7 vuelos suenan agotadores — en la práctica, el ritmo real está bastante equilibrado. El problema no es la cantidad, es <strong>dónde se agrupan</strong> los días exigentes (ver más abajo). De los 9 días con guía en español, 2 son solo el recibimiento en el aeropuerto (días 1 y 12) — quedan 7 días de guiado real. Hay además 1 día (el santuario de elefantes) con guía en inglés, no en español. *Suma de vuelos + traslados aeropuerto-hotel + inmigración en los 8 días de traslado entre ciudades — no incluye los 2 vuelos internacionales (llegada y salida) por ser muy variables según origen.</p>
+
+  <h2>Línea de tiempo, día por día</h2>
+  <p class="section-note">Cada bloque es un día, agrupado por ciudad/hotel. El color indica el nivel de exigencia de ese día.</p>
+
+  <div class="timeline-legend">
+    <span><i class="swatch sw-viaje"></i>Traslado</span>
+    <span><i class="swatch sw-descanso"></i>Libre / descanso</span>
+    <span><i class="swatch sw-intenso"></i>Intenso</span>
+    <span><i class="swatch sw-muyintenso"></i>Muy intenso</span>
+    <span><i class="sw-guide"></i>Con guía en español</span>
+  </div>
+
+  <div class="timeline">
+    <div class="segment">
+      <p class="segment-city">Bangkok</p>
+      <div class="segment-days">
+        <div class="day-chip chip-viaje has-guide"><span>1</span></div>
+        <div class="day-chip chip-intenso has-guide"><span>2</span></div>
+        <div class="day-chip chip-muyintenso has-guide"><span>3</span></div>
+      </div>
+    </div>
+    <div class="segment">
+      <p class="segment-city">Chiang Mai</p>
+      <div class="segment-days">
+        <div class="day-chip chip-intenso has-guide"><span>4</span></div>
+        <div class="day-chip chip-intenso"><span>5</span></div>
+        <div class="day-chip chip-viaje"><span>6</span></div>
+      </div>
+    </div>
+    <div class="segment">
+      <p class="segment-city">Krabi</p>
+      <div class="segment-days">
+        <div class="day-chip chip-descanso"><span>7</span></div>
+        <div class="day-chip chip-descanso"><span>8</span></div>
+        <div class="day-chip chip-viaje"><span>9</span></div>
+      </div>
+    </div>
+    <div class="segment">
+      <p class="segment-city">Phuket</p>
+      <div class="segment-days">
+        <div class="day-chip chip-descanso"><span>10</span></div>
+        <div class="day-chip chip-descanso"><span>11</span></div>
+        <div class="day-chip chip-viaje has-guide"><span>12</span></div>
+      </div>
+    </div>
+    <div class="segment">
+      <p class="segment-city">Siem Reap</p>
+      <div class="segment-days">
+        <div class="day-chip chip-muyintenso has-guide"><span>13</span></div>
+        <div class="day-chip chip-viaje"><span>14</span></div>
+      </div>
+    </div>
+    <div class="segment">
+      <p class="segment-city">Hoi An</p>
+      <div class="segment-days">
+        <div class="day-chip chip-intenso has-guide"><span>15</span></div>
+        <div class="day-chip chip-descanso"><span>16</span></div>
+        <div class="day-chip chip-viaje"><span>17</span></div>
+      </div>
+    </div>
+    <div class="segment">
+      <p class="segment-city">Phu Quoc</p>
+      <div class="segment-days">
+        <div class="day-chip chip-descanso"><span>18</span></div>
+        <div class="day-chip chip-descanso"><span>19</span></div>
+        <div class="day-chip chip-descanso"><span>20</span></div>
+        <div class="day-chip chip-viaje"><span>21</span></div>
+      </div>
+    </div>
+    <div class="segment">
+      <p class="segment-city">Ho Chi Minh</p>
+      <div class="segment-days">
+        <div class="day-chip chip-viaje"><span>22</span></div>
+      </div>
+    </div>
+    <div class="segment">
+      <p class="segment-city">Bali Ubud</p>
+      <div class="segment-days">
+        <div class="day-chip chip-muyintenso has-guide"><span>23</span></div>
+      </div>
+    </div>
+    <div class="segment">
+      <p class="segment-city">Bali Sur</p>
+      <div class="segment-days">
+        <div class="day-chip chip-muyintenso has-guide"><span>24</span></div>
+        <div class="day-chip chip-descanso"><span>25</span></div>
+        <div class="day-chip chip-descanso"><span>26</span></div>
+        <div class="day-chip chip-viaje"><span>27</span></div>
+      </div>
+    </div>
+  </div>
+  <p class="section-note" style="margin-top:10px;">El punto blanco en la esquina marca los días con guía en español. Notá que casi no coincide con los días de traslado — el guía acompaña sobre todo en días de visita, no en los vuelos.</p>
+
+  <div class="callout warn">
+    <h3>El problema no es la cantidad, es el agrupamiento</h3>
+    <p>Los días 2 y 3 (nada más aterrizar) y los días 23-24 (justo antes de terminar el viaje) concentran la mayor exigencia, sin ningún día de descanso de por medio. Y el sitio más importante del recorrido —Angkor— es el que menos tiempo relativo recibe: <strong>5 complejos arqueológicos en un solo día</strong>, con apenas 2 noches en Siem Reap. La mayoría de los itinerarios dedican 2-3 días a Angkor.</p>
+  </div>
+
+  <h2>Cuánto dura cada traslado</h2>
+  <p class="section-note">Todo esto está incluido en el precio de la agencia (vuelos, traslados aeropuerto-hotel y el auto de Krabi a Phuket). Lo que no está en el PDF es cuánto tiempo real se va en moverse — acá el desglose puerta a puerta de cada uno de los 8 días de cambio de ciudad, sumando vuelo/auto + traslados + inmigración cuando cruza frontera.</p>
+
+  <div class="table-wrap">
+    <table class="transfers">
+      <thead>
+        <tr><th>Día</th><th>Tramo</th><th>Modo</th><th class="num">Vuelo / ruta</th><th class="num">+ Aeropuertos e inmigración</th><th class="num">Total puerta a puerta</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="day-num">3</td>
+          <td>Mercados de Bangkok → Chiang Mai</td>
+          <td>Auto + avión</td>
+          <td class="num">~1h15 vuelo</td>
+          <td class="num">~3h ida/vuelta a mercados + ~1h05 aeropuertos</td>
+          <td class="num"><strong>~5h20</strong></td>
+        </tr>
+        <tr>
+          <td class="day-num">6</td>
+          <td>Chiang Mai → Krabi</td>
+          <td>Avión directo</td>
+          <td class="num">~1h50</td>
+          <td class="num">~50min</td>
+          <td class="num"><strong>~2h40</strong></td>
+        </tr>
+        <tr>
+          <td class="day-num">9</td>
+          <td>Krabi → Phuket</td>
+          <td>Auto/van privado</td>
+          <td class="num">~3h15 por carretera</td>
+          <td class="num">—</td>
+          <td class="num"><strong>~3h15</strong></td>
+        </tr>
+        <tr>
+          <td class="day-num">12</td>
+          <td>Phuket → Siem Reap</td>
+          <td>Avión directo*</td>
+          <td class="num">~1h40</td>
+          <td class="num">~1h10 (Phuket, lejos) + ~1h30 (visa Camboya)</td>
+          <td class="num"><strong>~4h20</strong></td>
+        </tr>
+        <tr>
+          <td class="day-num">14</td>
+          <td>Siem Reap → Hoi An (vía Danang)</td>
+          <td>Avión directo* + auto</td>
+          <td class="num">~1h55</td>
+          <td class="num">~30min + ~1h15 (visa Vietnam) + ~35min Danang→Hoi An</td>
+          <td class="num"><strong>~4h15</strong></td>
+        </tr>
+        <tr>
+          <td class="day-num">17</td>
+          <td>Hoi An → Phu Quoc (vía Danang)</td>
+          <td>Auto + avión</td>
+          <td class="num">~1h45</td>
+          <td class="num">~35min Hoi An→Danang + ~1h aeropuerto + ~25min</td>
+          <td class="num"><strong>~3h45</strong></td>
+        </tr>
+        <tr>
+          <td class="day-num">21</td>
+          <td>Phu Quoc → Ho Chi Minh</td>
+          <td>Avión directo</td>
+          <td class="num">~1h</td>
+          <td class="num">~1h20</td>
+          <td class="num"><strong>~2h20</strong></td>
+        </tr>
+        <tr>
+          <td class="day-num">22</td>
+          <td>Ho Chi Minh → Bali (Ubud)</td>
+          <td>Avión directo + auto</td>
+          <td class="num">~3h50</td>
+          <td class="num">~55min + ~1h05 Denpasar→Ubud (con visa Indonesia)</td>
+          <td class="num"><strong>~5h50</strong></td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr><td colspan="5">Total en tránsito, 8 días de cambio de ciudad</td><td class="num">~32h</td></tr>
+      </tfoot>
+    </table>
+  </div>
+  <p class="foot-note sans" style="font-size:11.5px;color:var(--ink-soft);margin-top:4px;">* Phuket→Siem Reap y Siem Reap→Danang tienen pocas frecuencias directas semanales (según una de las fuentes, 3 veces por semana) — si la fecha final no calza con esos días, el trayecto se alarga varias horas por una escala en Bangkok o Ho Chi Minh. Vale la pena confirmarlo con la agencia antes de fijar fechas. Duraciones de vuelo estimadas por ruta; no son horarios de itinerario confirmados.</p>
+
+  <div class="callout">
+    <h3>El día 22 es, por lejos, el más largo del viaje</h3>
+    <p>Ho Chi Minh → Bali suma casi <strong>6 horas puerta a puerta</strong> — el vuelo más largo del itinerario (~3h50) más el trámite de inmigración de Indonesia más el traslado Denpasar→Ubud, que con tráfico puede ser largo. Esto también cambia la lectura sobre la noche en Ho Chi Minh: no parece un desperdicio sino un <strong>colchón necesario</strong> — encadenar el vuelo Phu Quoc→HCM (día 21) con este tramo el mismo día sería arriesgado si hay cualquier demora. Vale la pena mantenerlo, no eliminarlo.</p>
+  </div>
+
+  <h2>Los 10 hoteles</h2>
+  <p class="section-note">Categoría y tipo de habitación tal como los cotizó la agencia, con una lectura rápida de qué tan bien encajan para una luna de miel.</p>
+
+  <div class="hotel-grid">
+    <div class="hotel-card">
+      <img src="images/img_bangkok_hotel.jpg" alt="Grande Centre Point Surawong">
+      <div class="hotel-body">
+        <div class="hotel-top"><span class="hotel-city">Bangkok</span><span class="hotel-nights">2 noches</span></div>
+        <p class="hotel-name">Grande Centre Point Surawong</p>
+        <p class="hotel-room">5* · Deluxe</p>
+        <p class="hotel-note">Cadena confiable en pleno Silom. Buena relación calidad-ubicación para una escala corta de solo 2 noches.</p>
+      </div>
+    </div>
+    <div class="hotel-card">
+      <img src="images/img_chiangmai_hotel.jpg" alt="Meliá Chiang Mai">
+      <div class="hotel-body">
+        <div class="hotel-top"><span class="hotel-city">Chiang Mai</span><span class="hotel-nights">3 noches</span></div>
+        <p class="hotel-name">Meliá Chiang Mai</p>
+        <p class="hotel-room">5* · Meliá Room</p>
+        <p class="hotel-note">Resort de cadena junto al río, con piscina amplia. Buen ancla para los días de templos y elefantes.</p>
+      </div>
+    </div>
+    <div class="hotel-card">
+      <img src="images/img_krabi_hotel.jpg" alt="The Shell Sea Krabi">
+      <div class="hotel-body">
+        <div class="hotel-top"><span class="hotel-city">Krabi</span><span class="hotel-nights">3 noches</span></div>
+        <p class="hotel-name">The Shell Sea Krabi</p>
+        <p class="hotel-room">5* · Shellsea Garden</p>
+        <span class="tag tag-watch">a revisar</span>
+        <p class="hotel-note">La categoría cotizada es <strong>vista jardín, no vista al mar</strong>. Vale la pena preguntar cuánto cuesta subir a una habitación con vista playa.</p>
+      </div>
+    </div>
+    <div class="hotel-card">
+      <img src="images/img_phuket_hotel.jpg" alt="Katathani Phuket Beach Resort">
+      <div class="hotel-body">
+        <div class="hotel-top"><span class="hotel-city">Phuket</span><span class="hotel-nights">3 noches</span></div>
+        <p class="hotel-name">Katathani Phuket Beach Resort</p>
+        <p class="hotel-room">5* · Deluxe</p>
+        <span class="tag tag-best">el mejor del viaje</span>
+        <p class="hotel-note">Frente a la playa Kata Noi. Ampliamente considerado uno de los resorts más consistentes y mejor valorados de todo Phuket.</p>
+      </div>
+    </div>
+    <div class="hotel-card">
+      <img src="images/img_siemreap_hotel.jpg" alt="Courtyard by Marriott Siem Reap">
+      <div class="hotel-body">
+        <div class="hotel-top"><span class="hotel-city">Siem Reap</span><span class="hotel-nights">2 noches</span></div>
+        <p class="hotel-name">Courtyard by Marriott Siem Reap</p>
+        <p class="hotel-room">5* · Deluxe</p>
+        <p class="hotel-note">Cadena internacional segura, pero más corporativa que boutique. Hay opciones más atmosféricas en Siem Reap si buscan algo más romántico.</p>
+      </div>
+    </div>
+    <div class="hotel-card">
+      <img src="images/img_hoian_hotel.jpg" alt="Little Oasis Hotel">
+      <div class="hotel-body">
+        <div class="hotel-top"><span class="hotel-city">Hoi An</span><span class="hotel-nights">3 noches</span></div>
+        <p class="hotel-name">Little Oasis Hotel</p>
+        <p class="hotel-room">5* · Deluxe</p>
+        <p class="hotel-note">Boutique pequeño y bien valorado, tranquilo. Buena opción para desconectar justo después de la maratón de Angkor.</p>
+      </div>
+    </div>
+    <div class="hotel-card">
+      <img src="images/img_phuquoc_hotel.jpg" alt="Dusit Princess Moonrise Beach Resort">
+      <div class="hotel-body">
+        <div class="hotel-top"><span class="hotel-city">Phu Quoc</span><span class="hotel-nights">4 noches</span></div>
+        <p class="hotel-name">Dusit Princess Moonrise Beach Resort</p>
+        <p class="hotel-room">4*+ · Deluxe Garden</p>
+        <span class="tag tag-watch">a revisar</span>
+        <p class="hotel-note">Es la estadía más larga de todo el viaje (4 noches), pero la <strong>única categoría por debajo de 5 estrellas</strong> entre los hoteles de playa. Vale preguntar si hay upgrade disponible.</p>
+      </div>
+    </div>
+    <div class="hotel-card">
+      <img src="images/img_hcm_hotel.jpg" alt="Eden Star Hotel">
+      <div class="hotel-body">
+        <div class="hotel-top"><span class="hotel-city">Ho Chi Minh</span><span class="hotel-nights">1 noche</span></div>
+        <p class="hotel-name">Eden Star Hotel</p>
+        <p class="hotel-room">4* · Premium</p>
+        <p class="hotel-note">Una sola noche de tránsito puro, sin guía ni visita programada. Funciona como escala, no como destino.</p>
+      </div>
+    </div>
+    <div class="hotel-card">
+      <img src="images/img_ubud_hotel.jpg" alt="Visesa Ubud Resort">
+      <div class="hotel-body">
+        <div class="hotel-top"><span class="hotel-city">Bali Ubud</span><span class="hotel-nights">2 noches</span></div>
+        <p class="hotel-name">Visesa Ubud Resort</p>
+        <p class="hotel-room">5* · Jungle Suite</p>
+        <span class="tag tag-best">el más romántico</span>
+        <p class="hotel-note">Boutique en plena selva. Probablemente el hotel con más "ambiente de luna de miel" de todo el recorrido.</p>
+      </div>
+    </div>
+    <div class="hotel-card">
+      <img src="images/img_balisur_hotel.jpg" alt="Sol by Meliá Bali">
+      <div class="hotel-body">
+        <div class="hotel-top"><span class="hotel-city">Bali Sur</span><span class="hotel-nights">3 noches</span></div>
+        <p class="hotel-name">Sol by Meliá (Sol Benoa)</p>
+        <p class="hotel-room">5* · Sol Room</p>
+        <p class="hotel-note">Resort de playa de cadena grande. Cierre cómodo y relajado para los últimos días del viaje.</p>
+      </div>
+    </div>
+  </div>
+
+  <h2>Templos y actividades clave</h2>
+  <p class="section-note">Los puntos que más definen la experiencia — y cuánto exigen del cuerpo y del tiempo.</p>
+
+  <div class="activity-grid">
+    <div class="activity-card">
+      <img src="images/img_grandpalace.jpg" alt="Gran Palacio Bangkok">
+      <div class="activity-body">
+        <div class="activity-top"><p class="activity-name">Gran Palacio / Wat Phra Kaew</p><span class="activity-day">Día 2 · Bangkok</span></div>
+        <span class="intensity-chip ic-intenso">Intenso</span>
+        <p class="activity-note">El templo más visitado de Tailandia. Imperdible, pero con mucha gente y código de vestimenta estricto (hombros y rodillas cubiertos).</p>
+      </div>
+    </div>
+    <div class="activity-card">
+      <img src="images/img_floatingmarket.jpg" alt="Mercado flotante Damnoen Saduak">
+      <div class="activity-body">
+        <div class="activity-top"><p class="activity-name">Mercado flotante Damnoen Saduak</p><span class="activity-day">Día 3 · Bangkok</span></div>
+        <span class="intensity-chip ic-muyintenso">Muy intenso</span>
+        <p class="activity-note">A 80 km de Bangkok, se combina con otro mercado y un vuelo el mismo día — el día más apretado de todo el itinerario.</p>
+      </div>
+    </div>
+    <div class="activity-card">
+      <img src="images/img_doisuthep.jpg" alt="Wat Doi Suthep">
+      <div class="activity-body">
+        <div class="activity-top"><p class="activity-name">Wat Phra That Doi Suthep</p><span class="activity-day">Día 4 · Chiang Mai</span></div>
+        <span class="intensity-chip ic-intenso">Intenso</span>
+        <p class="activity-note">Templo dorado de montaña con vistas a la ciudad. Hay que subir unos 300 escalones hasta la cima (o funicular).</p>
+      </div>
+    </div>
+    <div class="activity-card">
+      <img src="images/img_elephant.jpg" alt="Santuario de elefantes">
+      <div class="activity-body">
+        <div class="activity-top"><p class="activity-name">Santuario de elefantes</p><span class="activity-day">Día 5 · Chiang Mai</span></div>
+        <span class="intensity-chip ic-intenso">Intenso</span>
+        <p class="activity-note">Actividad de día completo, aparentemente ética (alimentación y baño, sin mención de montarlos) — vale confirmar el estándar del santuario puntual antes de reservar.</p>
+      </div>
+    </div>
+    <div class="activity-card">
+      <img src="images/img_angkorwat.jpg" alt="Angkor Wat">
+      <div class="activity-body">
+        <div class="activity-top"><p class="activity-name">Angkor Wat</p><span class="activity-day">Día 13 · Siem Reap</span></div>
+        <span class="intensity-chip ic-muyintenso">Muy intenso</span>
+        <p class="activity-note">El templo más grande del mundo, cierre de una jornada con otros 4 complejos el mismo día. El punto más importante del viaje es también el más apurado.</p>
+      </div>
+    </div>
+    <div class="activity-card">
+      <img src="images/img_taprohm.jpg" alt="Ta Prohm">
+      <div class="activity-body">
+        <div class="activity-top"><p class="activity-name">Ta Prohm</p><span class="activity-day">Día 13 · Siem Reap</span></div>
+        <span class="intensity-chip ic-muyintenso">Muy intenso</span>
+        <p class="activity-note">Ruinas cubiertas por raíces de árboles de la selva (el templo de "Tomb Raider"), visitado la misma tarde que Angkor Wat.</p>
+      </div>
+    </div>
+    <div class="activity-card">
+      <img src="images/img_hoian_town.jpg" alt="Casco antiguo de Hoi An">
+      <div class="activity-body">
+        <div class="activity-top"><p class="activity-name">Casco antiguo de Hoi An</p><span class="activity-day">Día 15 · Hoi An</span></div>
+        <span class="intensity-chip ic-intenso">Intenso</span>
+        <p class="activity-note">Ciudad Patrimonio de la Humanidad. Más relajado que Angkor, con clase de cocina y paseo en barca de mimbre incluidos.</p>
+      </div>
+    </div>
+    <div class="activity-card">
+      <img src="images/img_tanahlot.jpg" alt="Tanah Lot">
+      <div class="activity-body">
+        <div class="activity-top"><p class="activity-name">Tanah Lot</p><span class="activity-day">Día 24 · Bali</span></div>
+        <span class="intensity-chip ic-muyintenso">Muy intenso</span>
+        <p class="activity-note">Cierre de un día con otros 3 templos antes (Mengwi, Jatiluwih, Ulun Danu Bratan). Atardecer icónico, pero al final de una jornada larga.</p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="rule">
+
+  <h2>Puntos para revisar con la agencia</h2>
+  <div class="callout warn">
+    <ul>
+      <li><strong>El día 3 es el más exigente del viaje entero:</strong> dos mercados alejados entre sí más un vuelo, apenas 48 horas después de haber llegado internacionalmente. Poco margen si algo se atrasa.</li>
+      <li><strong>Angkor en un solo día:</strong> con solo 2 noches en Siem Reap, cinco complejos arqueológicos se visitan en una sola jornada. Vale la pena preguntar si se puede sumar una noche extra ahí — incluso restando una noche a Phu Quoc, que ya tiene 4.</li>
+      <li><strong>Días 23-24 en Bali:</strong> otra "maratón de templos" (8 sitios en 2 días), justo después de ya haber hecho varias jornadas similares en Tailandia y Camboya. Riesgo real de fatiga de templos al cierre del viaje.</li>
+      <li><strong>Ho Chi Minh, 1 noche sin guía ni visita:</strong> a primera vista parece desaprovechada, pero al mirar los tiempos de traslado (ver tabla arriba) el tramo Ho Chi Minh→Bali ya suma ~6h solo, y encadenarlo el mismo día que el vuelo Phu Quoc→HCM sería arriesgado. Esta noche funciona como colchón, no como desperdicio — no la sacaría.</li>
+      <li><strong>Inconsistencia en el PDF (día 6):</strong> el título del Día 6 dice "vuelo a Krabi" pero el texto describe "vuelo a Phuket" — probablemente un error de una plantilla reciclada.</li>
+      <li><strong>Otra inconsistencia (visados):</strong> la lista de exclusiones del PDF menciona "gastos del visado a Tailandia, Vietnam, Camboya y <strong>Laos</strong>" — pero este itinerario no pasa por Laos en ningún momento, sino por Bali/Indonesia, que ni siquiera se menciona. Parece la misma plantilla reciclada del punto anterior. Vale la pena pedir por escrito los requisitos de visa reales para las 4 fronteras que sí cruzan (Tailandia, Camboya, Vietnam, Indonesia).</li>
+      <li><strong>Vuelos de baja frecuencia:</strong> Phuket→Siem Reap y Siem Reap→Danang tienen pocos vuelos directos por semana — si la fecha final no calza, esos días de traslado se alargan varias horas por una escala.</li>
+      <li><strong>Comidas:</strong> solo el desayuno está incluido casi todos los días — almuerzo y cena van por cuenta propia en 25 de los 27 días.</li>
+      <li><strong>Excursiones opcionales</strong> (4 islas en Krabi USD 75/persona, Phi Phi en Phuket USD 85/persona) no están incluidas — si quieren aprovechar más los días de playa "libres", son ~USD 320 extra para los dos.</li>
+    </ul>
+  </div>
+
+  <div class="callout">
+    <h3>El veredicto sobre el ritmo</h3>
+    <p>Como itinerario, está <strong>bien construido en general</strong>: alterna tramos de cultura intensa con bloques reales de descanso en playa (Krabi, Phuket, Phu Quoc, Bali Sur suman 10 días completamente libres), y hasta la noche de tránsito en Ho Chi Minh tiene una razón logística real. El problema no es el volumen ni la logística, es la <strong>distribución de la exigencia cultural</strong>: se concentra justo al llegar (días 2-3) y justo antes de terminar (días 23-24), y el sitio más importante del viaje —Angkor— es el que recibe proporcionalmente menos tiempo pese a ser uno de los días con más horas de traslado embebidas. Si hay margen para ajustar algo con la agencia antes de confirmar, un día más en Siem Reap es lo que más rendiría — no tocaría Ho Chi Minh ni el resto de los traslados.</p>
+  </div>
+
+  <h2 style="margin-top:10px;">Fuentes de las fotos</h2>
+  <ul class="sources" id="photo-sources">
+    <li>Fotografías de hoteles: sitios oficiales de cada propiedad. Fotografías de templos y lugares: Wikimedia Commons (uso libre).</li>
+  </ul>
+
+</div>
