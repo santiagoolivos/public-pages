@@ -1,0 +1,545 @@
+<title>Tailandia · Vietnam · Camboya · Bali — Agencia vs. DIY</title>
+<style>
+  :root{
+    --paper:#f1eee4;
+    --paper-2:#e9e4d4;
+    --ink:#23282a;
+    --ink-soft:#5a5f57;
+    --jade:#2f5d50;
+    --jade-deep:#1e3e35;
+    --gold:#b98a3f;
+    --rust:#a85751;
+    --line:#d8d2c2;
+  }
+
+  *{box-sizing:border-box;}
+
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Iowan Old Style","Palatino Linotype","Book Antiqua",Georgia,serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  .doc{
+    max-width:780px;
+    margin:0 auto;
+    padding:56px 28px 90px;
+  }
+
+  .sans{
+    font-family:"Avenir Next","Century Gothic","Segoe UI",Helvetica,Arial,sans-serif;
+  }
+
+  .mono, td.num, .stat-value{
+    font-family:ui-monospace,"SF Mono",Consolas,Menlo,monospace;
+    font-variant-numeric:tabular-nums;
+  }
+
+  /* ---------- Header ---------- */
+
+  .eyebrow{
+    font-family:"Avenir Next","Segoe UI",sans-serif;
+    font-size:11.5px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--jade);
+    font-weight:600;
+    margin:0 0 10px;
+  }
+
+  h1{
+    font-size:clamp(28px,4.2vw,38px);
+    line-height:1.12;
+    margin:0 0 14px;
+    color:var(--jade-deep);
+    text-wrap:balance;
+    font-weight:600;
+    letter-spacing:-.01em;
+  }
+
+  .dek{
+    font-size:16px;
+    color:var(--ink-soft);
+    max-width:60ch;
+    margin:0 0 28px;
+  }
+
+  /* route strip */
+  .route{
+    display:flex;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:0;
+    font-family:"Avenir Next","Segoe UI",sans-serif;
+    font-size:12px;
+    letter-spacing:.02em;
+    color:var(--ink-soft);
+    padding:14px 0;
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    margin-bottom:34px;
+  }
+  .route .stop{white-space:nowrap;padding:2px 0;}
+  .route .stop.first, .route .stop.last{color:var(--jade-deep);font-weight:700;}
+  .route .seg{
+    flex:1 1 18px;
+    min-width:10px;
+    height:1px;
+    margin:0 6px;
+    background-image:linear-gradient(to right,var(--gold) 0 3px,transparent 3px 7px);
+    background-size:7px 1px;
+    background-repeat:repeat-x;
+    position:relative;
+    top:1px;
+  }
+
+  /* ---------- Alert ---------- */
+
+  .alert{
+    background:#efe2dd;
+    border-left:3px solid var(--rust);
+    padding:16px 20px;
+    margin:0 0 30px;
+    border-radius:2px;
+  }
+  .alert .alert-title{
+    font-family:"Avenir Next","Segoe UI",sans-serif;
+    font-weight:700;
+    font-size:12.5px;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    color:var(--rust);
+    margin:0 0 6px;
+  }
+  .alert p{margin:0 0 6px;font-size:14.5px;}
+  .alert p:last-child{margin-bottom:0;}
+
+  /* ---------- Section headings ---------- */
+
+  h2{
+    font-size:20px;
+    color:var(--jade-deep);
+    margin:46px 0 6px;
+    font-weight:600;
+  }
+  .section-note{
+    font-family:"Avenir Next","Segoe UI",sans-serif;
+    font-size:13px;
+    color:var(--ink-soft);
+    margin:0 0 18px;
+    max-width:62ch;
+  }
+
+  /* ---------- Stat cards ---------- */
+
+  .stats{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+    margin:18px 0 8px;
+  }
+  .stat{
+    background:var(--paper);
+    padding:20px 18px;
+  }
+  .stat.highlight{background:var(--jade-deep);}
+  .stat.highlight .stat-label{color:#cfe0d8;}
+  .stat.highlight .stat-value{color:#fff;}
+  .stat.highlight .stat-sub{color:#9fc2b3;}
+  .stat-label{
+    font-family:"Avenir Next","Segoe UI",sans-serif;
+    font-size:11px;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    margin:0 0 8px;
+  }
+  .stat-value{
+    font-size:26px;
+    font-weight:600;
+    color:var(--jade-deep);
+    display:block;
+  }
+  .stat-sub{
+    font-family:"Avenir Next","Segoe UI",sans-serif;
+    font-size:12px;
+    color:var(--ink-soft);
+    margin-top:4px;
+  }
+
+  @media (max-width:560px){
+    .stats{grid-template-columns:1fr;}
+  }
+
+  /* ---------- Tables ---------- */
+
+  .table-wrap{overflow-x:auto;margin:0 0 8px;}
+  table{
+    width:100%;
+    border-collapse:collapse;
+    font-family:"Avenir Next","Segoe UI",sans-serif;
+    font-size:13.5px;
+    min-width:620px;
+  }
+  thead th{
+    text-align:left;
+    font-size:10.5px;
+    letter-spacing:.07em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    font-weight:700;
+    padding:0 12px 8px 0;
+    border-bottom:1.5px solid var(--jade-deep);
+  }
+  tbody td{
+    padding:10px 12px 10px 0;
+    border-bottom:1px solid var(--line);
+    vertical-align:top;
+  }
+  tbody tr:last-child td{border-bottom:1px solid var(--jade-deep);}
+  td.num, th.num{text-align:right;}
+  td.city{font-weight:700;color:var(--jade-deep);white-space:nowrap;}
+  td.hotel-name{color:var(--ink);}
+  td .room{display:block;font-size:11.5px;color:var(--ink-soft);margin-top:2px;}
+  tfoot td{
+    padding:12px 12px 0 0;
+    font-weight:700;
+    border-top:2px solid var(--jade-deep);
+    border-bottom:none;
+  }
+  tfoot td.city{color:var(--ink);}
+
+  .diff-cheaper{color:var(--jade);font-weight:700;}
+  .diff-costlier{color:var(--rust);font-weight:700;}
+
+  .foot-note{
+    font-family:"Avenir Next","Segoe UI",sans-serif;
+    font-size:11.5px;
+    color:var(--ink-soft);
+    margin:8px 0 0;
+  }
+
+  /* ---------- Verdict ---------- */
+
+  .verdict{
+    background:var(--paper-2);
+    border:1px solid var(--line);
+    border-top:3px solid var(--gold);
+    padding:26px 28px;
+    margin:20px 0 40px;
+  }
+  .verdict h3{
+    font-size:17px;
+    margin:0 0 10px;
+    color:var(--jade-deep);
+  }
+  .verdict p{margin:0 0 12px;font-size:15px;}
+  .verdict p:last-child{margin-bottom:0;}
+  .verdict ul{margin:0 0 12px;padding-left:20px;font-size:14.5px;}
+  .verdict li{margin-bottom:6px;}
+
+  hr.rule{
+    border:none;
+    border-top:1px dashed var(--line);
+    margin:40px 0;
+  }
+
+  .sources{
+    font-family:"Avenir Next","Segoe UI",sans-serif;
+    font-size:12px;
+    color:var(--ink-soft);
+    line-height:1.7;
+  }
+  .sources li{margin-bottom:4px;}
+</style>
+
+<div style="max-width:780px;margin:0 auto;padding:16px 28px 0;font-family:'Avenir Next','Segoe UI',sans-serif;font-size:12.5px;">
+  <a href="index.html" style="color:#2f5d50;text-decoration:none;font-weight:700;">&larr; Ver análisis de ritmo, hoteles y actividades</a>
+</div>
+<div class="doc">
+
+  <p class="eyebrow">Análisis de costos · Grupo María Angélica (2 pax)</p>
+  <h1>Tailandia, Vietnam, Camboya y Bali — 27 días</h1>
+  <p class="dek">Comparación entre el paquete cotizado por Vietnam Viajes y el costo de organizar los mismos hoteles, vuelos internos y recorridos por cuenta propia.</p>
+
+  <div class="route sans">
+    <span class="stop first">BKK</span><span class="seg"></span>
+    <span class="stop">CNX</span><span class="seg"></span>
+    <span class="stop">KBV</span><span class="seg"></span>
+    <span class="stop">HKT</span><span class="seg"></span>
+    <span class="stop">SAI</span><span class="seg"></span>
+    <span class="stop">DAD</span><span class="seg"></span>
+    <span class="stop">PQC</span><span class="seg"></span>
+    <span class="stop">SGN</span><span class="seg"></span>
+    <span class="stop last">DPS</span>
+  </div>
+
+  <div class="alert">
+    <p class="alert-title">Dos advertencias antes de los números</p>
+    <p><strong>La cotización venció el 1 de julio</strong> — el PDF dice "válida hasta 01 JUL" y hoy ya pasó esa fecha. Los USD 5.320/persona no están garantizados; hay que pedirle a la agencia una recotización.</p>
+    <p><strong>Las fechas del viaje (13 ene–8 feb 2026) ya pasaron</strong> respecto a la fecha actual. Toda la investigación de precios de hoteles y vuelos usó las mismas fechas de <strong>2027</strong> como referencia de temporada alta equivalente — son estimaciones de mercado, no reservas confirmadas.</p>
+  </div>
+
+  <h2>El resultado en tres números</h2>
+  <p class="section-note">Para las 2 personas, el paquete completo frente a la mejor estimación de organizarlo uno mismo con los mismos 10 hoteles, 7 vuelos internos, traslados y entradas (sin guía privado de español).</p>
+
+  <div class="stats">
+    <div class="stat">
+      <p class="stat-label">Paquete agencia</p>
+      <span class="stat-value">$10.640</span>
+      <p class="stat-sub">$5.320/persona · hoteles 4*/5*</p>
+    </div>
+    <div class="stat">
+      <p class="stat-label">DIY estimado</p>
+      <span class="stat-value">~$7.260</span>
+      <p class="stat-sub">~$3.630/persona · rango $6.815–7.715</p>
+    </div>
+    <div class="stat highlight">
+      <p class="stat-label">Ahorro potencial</p>
+      <span class="stat-value">~$3.380</span>
+      <p class="stat-sub">≈ 32% · ~$1.690 por persona</p>
+    </div>
+  </div>
+  <p class="foot-note">Cifras en USD, redondeadas. Ver metodología y fuentes al final.</p>
+
+  <h2>Comparación completa, categoría por categoría</h2>
+  <p class="section-note">Todo lo que paga la agencia dentro de los $10.640 versus armar cada pieza por tu cuenta, con el mismo hotel/vuelo/actividad. "Incluido" significa que forma parte del paquete y no tiene una línea de precio separada — el desglose agencia es una estimación de mercado, no una factura de ellos.</p>
+
+  <div class="table-wrap">
+    <table style="min-width:680px;">
+      <thead>
+        <tr>
+          <th>Categoría</th>
+          <th class="num">Agencia<br>(2 pax)</th>
+          <th class="num">DIY<br>(2 pax)</th>
+          <th>Diferencia</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="hotel-name">Hoteles — 10 propiedades, 26 noches, misma categoría<span class="room">único rubro con precio propio en el PDF de la agencia</span></td>
+          <td class="num mono">$4.240</td>
+          <td class="num mono">~$4.930</td>
+          <td class="diff-costlier">+$690 más caro por tu cuenta</td>
+        </tr>
+        <tr>
+          <td class="hotel-name">Vuelos internos — 7 tramos<span class="room">Bangkok→Bali, todo economy</span></td>
+          <td class="num mono">incluido*</td>
+          <td class="num mono">~$1.525</td>
+          <td>≈ similar, sin evidencia de diferencia real</td>
+        </tr>
+        <tr>
+          <td class="hotel-name">Traslados aeropuerto–hotel<span class="room">10 tramos en 5 países</span></td>
+          <td class="num mono">incluido*</td>
+          <td class="num mono">~$230</td>
+          <td>≈ similar</td>
+        </tr>
+        <tr>
+          <td class="hotel-name">Auto privado en días de visita<span class="room">7 días con recorridos (sin narración de guía)</span></td>
+          <td class="num mono">incluido*</td>
+          <td class="num mono">~$355</td>
+          <td>≈ similar</td>
+        </tr>
+        <tr>
+          <td class="hotel-name">Entradas a sitios turísticos<span class="room">Gran Palacio, pase Angkor, templos de Bali, Hoi An</span></td>
+          <td class="num mono">incluido*</td>
+          <td class="num mono">~$220</td>
+          <td>≈ similar</td>
+        </tr>
+        <tr>
+          <td class="hotel-name">Guía privado en español<span class="room">~7 días de guiado activo</span></td>
+          <td class="num mono">incluido*</td>
+          <td class="num mono diff-cheaper">$0</td>
+          <td class="diff-cheaper">se resigna el servicio, no solo el costo</td>
+        </tr>
+        <tr>
+          <td class="hotel-name">Coordinación de todo el viaje<span class="room">17 reservas, 5 países, un solo punto de contacto</span></td>
+          <td class="num mono">incluido*</td>
+          <td class="num mono diff-cheaper">$0</td>
+          <td class="diff-cheaper">lo gestionás vos — acá está el ahorro real</td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr><td>Total (2 personas)</td><td class="num mono">$10.640</td><td class="num mono">≈ $7.260</td><td class="diff-cheaper">ahorro ≈ $3.380 (32%)</td></tr>
+        <tr><td style="font-weight:400;color:var(--ink-soft);font-size:12px;">Por persona</td><td class="num mono" style="font-weight:400;color:var(--ink-soft);">$5.320</td><td class="num mono" style="font-weight:400;color:var(--ink-soft);">~$3.630</td><td style="font-weight:400;color:var(--ink-soft);font-size:12px;">~$1.690/persona</td></tr>
+      </tfoot>
+    </table>
+  </div>
+  <p class="foot-note">* Las filas "incluido" no tienen precio propio en el PDF — son la parte de los $6.400 del paquete "sin hoteles" que sobra después de restar vuelos, traslados, autos y entradas estimados; ese resto (~$3.550–3.700) es sobre todo guía + coordinación + margen de la agencia. Detalle completo en la sección de metodología.</p>
+
+  <h2>Ventajas concretas de cada camino</h2>
+  <div class="stats" style="grid-template-columns:1fr 1fr;">
+    <div class="stat">
+      <p class="stat-label" style="color:var(--jade);">Ir con la agencia</p>
+      <ul style="margin:8px 0 0;padding-left:18px;font-size:13.5px;line-height:1.6;">
+        <li>Un solo punto de contacto si algo falla (vuelo perdido, hotel con problema) en 27 días por 4 países</li>
+        <li>Guía en español justo donde más aporta contexto: Gran Palacio, Angkor Wat, templos de Bali</li>
+        <li>Cero horas de gestión: no arman 10 reservas de hotel ni 7 vuelos en 4 aerolíneas distintas</li>
+        <li>En hoteles, su tarifa neta ($4.240) ya es más barata que el precio público — ahí no perderían nada dejándoselo a ellos</li>
+        <li>Conexiones ajustadas entre vuelos y traslados ya resueltas por alguien con experiencia en la ruta</li>
+      </ul>
+    </div>
+    <div class="stat">
+      <p class="stat-label" style="color:var(--gold);">Organizarlo ustedes</p>
+      <ul style="margin:8px 0 0;padding-left:18px;font-size:13.5px;line-height:1.6;">
+        <li>Ahorro de ~$3.380 para la pareja (~$1.690 por persona)</li>
+        <li>Libertad para cambiar de planes día a día sin depender de un itinerario fijo</li>
+        <li>Eligen sus propios horarios de vuelo, incluso pueden encontrar mejores tarifas siendo flexibles</li>
+        <li>No pagan por un guía que quizás no valoran tanto para esta pareja en particular</li>
+        <li>Pueden ajustar noches, saltarse una ciudad o sumar días donde quieran</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="verdict">
+    <h3>La conclusión</h3>
+    <p><strong>El ahorro no viene de "reservar mejor" — viene de resignar el guía y la coordinación completa.</strong> En hoteles, la agencia ya es $690 más barata que el precio público; en vuelos, traslados y entradas, el costo es prácticamente el mismo se organice como se organice. Lo único que realmente cambia de precio es la parte de servicio: guía + gestión de 17 reservas en 5 países, que representa casi todo el ahorro de $3.380.</p>
+    <p>Por eso <strong>no conviene un camino mixto</strong> del tipo "hotel con la agencia, el resto por mi cuenta" — perderían la ventaja de precio en hoteles sin ganar nada, porque el resto (vuelos, traslados, entradas) cuesta igual sea quien sea que lo reserve. La decisión real es binaria: <strong>o van 100% con la agencia, o van 100% por su cuenta.</strong> Dado que el guía es lo único de valor que se resigna al hacerlo ustedes mismos, la pregunta que define todo es: ¿cuánto vale para ustedes tener a alguien explicando el Palacio Real, Angkor Wat y los templos de Bali, y no tener que armar y monitorear 17 reservas en cuatro países durante una luna de miel?</p>
+    <p>Antes de decidir cualquier cosa: <strong>pedile a Vietnam Viajes que confirme si el precio de $5.320/persona sigue en pie</strong>, ya que la validez venció el 1 de julio.</p>
+  </div>
+
+  <hr class="rule">
+
+  <h2>Anexo — hoteles, hotel por hotel</h2>
+  <p class="section-note">Mismo hotel y misma categoría de habitación que cotizó la agencia, tarifa pública (Booking.com / Agoda / sitio oficial) con desayuno incluido donde fue posible verificarlo.</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Ciudad</th>
+          <th>Hotel</th>
+          <th class="num">Noches</th>
+          <th class="num">DIY (2 pax)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="city">Bangkok</td>
+          <td class="hotel-name">Grande Centre Point Surawong<span class="room">Deluxe</span></td>
+          <td class="num mono">2</td>
+          <td class="num mono">$304 – 330</td>
+        </tr>
+        <tr>
+          <td class="city">Chiang Mai</td>
+          <td class="hotel-name">Meliá Chiang Mai<span class="room">Meliá Room</span></td>
+          <td class="num mono">3</td>
+          <td class="num mono">$710 – 777</td>
+        </tr>
+        <tr>
+          <td class="city">Krabi</td>
+          <td class="hotel-name">The Shell Sea Krabi<span class="room">Shellsea Garden</span></td>
+          <td class="num mono">3</td>
+          <td class="num mono">$585 – 914*</td>
+        </tr>
+        <tr>
+          <td class="city">Phuket</td>
+          <td class="hotel-name">Katathani Phuket Beach Resort<span class="room">Deluxe</span></td>
+          <td class="num mono">3</td>
+          <td class="num mono">$1.000 – 1.050</td>
+        </tr>
+        <tr>
+          <td class="city">Siem Reap</td>
+          <td class="hotel-name">Courtyard by Marriott Siem Reap<span class="room">Deluxe</span></td>
+          <td class="num mono">2</td>
+          <td class="num mono">$360</td>
+        </tr>
+        <tr>
+          <td class="city">Hoi An</td>
+          <td class="hotel-name">Little Oasis Hotel<span class="room">Deluxe</span></td>
+          <td class="num mono">3</td>
+          <td class="num mono">$258*</td>
+        </tr>
+        <tr>
+          <td class="city">Phu Quoc</td>
+          <td class="hotel-name">Moonrise Princess Dusit Phu Quoc<span class="room">Deluxe Garden</span></td>
+          <td class="num mono">4</td>
+          <td class="num mono">$480 – 640†</td>
+        </tr>
+        <tr>
+          <td class="city">Ho Chi Minh</td>
+          <td class="hotel-name">Eden Star Hotel<span class="room">Premium</span></td>
+          <td class="num mono">1</td>
+          <td class="num mono">$90 – 120†</td>
+        </tr>
+        <tr>
+          <td class="city">Bali Ubud</td>
+          <td class="hotel-name">Visesa Ubud Resort<span class="room">Jungle Suite</span></td>
+          <td class="num mono">2</td>
+          <td class="num mono">$340 – 385</td>
+        </tr>
+        <tr>
+          <td class="city">Bali Sur</td>
+          <td class="hotel-name">Sol by Meliá (Sol Benoa)<span class="room">Sol Room</span></td>
+          <td class="num mono">3</td>
+          <td class="num mono">$453</td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td class="city" colspan="2">Total hoteles (26 noches)</td>
+          <td class="num mono">26</td>
+          <td class="num mono">≈ $4.930 <span style="font-weight:400;color:var(--ink-soft);font-size:11.5px;">($4.580–5.290)</span></td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+  <p class="foot-note">* Krabi tiene una brecha grande entre Agoda (~$585 con impuestos estimados) y Booking (~$914) — conviene comparar ambas al reservar. † Phu Quoc y Ho Chi Minh no devolvieron tarifa en vivo para las fechas exactas; son estimaciones de mercado a partir de rangos históricos.</p>
+
+  <div class="table-wrap" style="margin-top:22px;">
+    <table style="min-width:340px;">
+      <tbody>
+        <tr>
+          <td class="hotel-name" style="font-weight:700;">Lo que cobra la agencia por alojamiento</td>
+          <td class="num mono" style="font-weight:700;">$4.240</td>
+        </tr>
+        <tr>
+          <td class="hotel-name">Diferencia vs. reservar tú mismo</td>
+          <td class="num mono diff-costlier">+$690 más caro reservando por tu cuenta</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="foot-note">Surge de restar los dos paquetes del PDF: $5.320/persona (con hoteles) − $3.200/persona (sin hoteles) = $2.120/persona → $4.240 para 2 personas. Es decir, la agencia ya tiene tarifas netas de hotel más baratas que el precio público de Booking/Agoda para estas mismas propiedades.</p>
+
+  <h2>Anexo — los 7 vuelos internos</h2>
+  <p class="section-note">Los que ya incluye el paquete de la agencia (Bangkok–Chiang Mai–Krabi es en auto, no vuela; el resto sí).</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Tramo</th><th>Aerolínea típica</th><th class="num">2 pax (ida)</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Bangkok → Chiang Mai</td><td class="sans">Thai AirAsia / Bangkok Airways</td><td class="num mono">$150</td></tr>
+        <tr><td>Chiang Mai → Krabi</td><td class="sans">Thai AirAsia</td><td class="num mono">$240</td></tr>
+        <tr><td>Phuket → Siem Reap</td><td class="sans">Thai AirAsia (directo, 3x/sem)</td><td class="num mono">$300</td></tr>
+        <tr><td>Siem Reap → Danang</td><td class="sans">Vietnam Airlines / VietJet</td><td class="num mono">$300</td></tr>
+        <tr><td>Danang → Phu Quoc</td><td class="sans">VietJet Air</td><td class="num mono">$150 – 200</td></tr>
+        <tr><td>Phu Quoc → Ho Chi Minh</td><td class="sans">VietJet Air</td><td class="num mono">$90 – 150</td></tr>
+        <tr><td>Ho Chi Minh → Bali</td><td class="sans">VietJet Air (directo, ~3h50)</td><td class="num mono">$200 – 280</td></tr>
+      </tbody>
+      <tfoot>
+        <tr><td colspan="2">Total vuelos internos</td><td class="num mono">≈ $1.525 <span style="font-weight:400;color:var(--ink-soft);font-size:11.5px;">($1.430–1.620)</span></td></tr>
+      </tfoot>
+    </table>
+  </div>
+  <p class="foot-note">Todas cotizadas en clase económica, reservando con 1–2 meses de anticipación. Precios de temporada alta (enero–febrero es pico turístico regional).</p>
+
+  <hr class="rule">
+
+  <h2 style="margin-top:10px;">Metodología y fuentes</h2>
+  <ul class="sources">
+    <li>Cotizaciones de hoteles: búsqueda en vivo en Booking.com y Agoda para las mismas fechas (ajustadas a 2027 por vencimiento del calendario), mismo tipo de habitación indicado en el PDF de la agencia, 2 adultos, con desayuno donde estaba disponible como opción.</li>
+    <li>Vuelos internos: estimaciones cruzando Skyscanner, Kayak, Expedia y las páginas de aerolíneas (AirAsia, VietJet, Bangkok Airways) para las mismas rutas y fechas.</li>
+    <li>Traslados y entradas: estimación basada en tarifas típicas de Grab/taxi en la región y precios publicados de entradas (Gran Palacio, pase de Angkor, ecotour de Hoi An, templos de Bali).</li>
+    <li>Auto privado en días de visita: tarifa típica de charter de auto+chofer por día completo (sin guía) en cada país, para los 7 días con recorridos del itinerario (Bangkok x2, Chiang Mai, Angkor, Hoi An, Bali x2).</li>
+    <li>Guía + coordinación: no tienen precio propio en el PDF. Se calculan por descarte — al paquete "sin hoteles" ($6.400 para 2) se le restan vuelos, traslados, auto privado y entradas estimados; lo que sobra (~$3.550–3.700) es la mezcla de guía en español y gestión/margen de la agencia, que no se puede separar con precisión sin pedirle un desglose a Vietnam Viajes.</li>
+    <li>Nota aparte: el PDF titula el viaje "24 días 23 noches" pero el itinerario día a día (Día 1 a Día 27, 13 enero–8 febrero) suma en realidad 27 días / 26 noches — vale la pena confirmarlo con la agencia junto con la recotización.</li>
+  </ul>
+
+</div>
