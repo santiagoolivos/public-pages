@@ -316,7 +316,7 @@
         <span class="dot fixed"></span>
         <div>
           <b>Diferencias de monto que nunca les afectaron</b>
-          <p>El caso típico: una transacción se confirma justo al filo del cierre del día, o un banco tiene una intermitencia puntual. La detectamos en nuestro cuadre interno, se lo avisamos a su equipo con anticipación y juntos decidimos incluirla en la rendición del día siguiente — sin que representara una diferencia real para ustedes. Así se resolvió, por ejemplo, un pago de $1.339.018 el 9 de junio.</p>
+          <p>El caso típico es un <b>falso negativo</b>: el pago del cliente sí fue exitoso (el dinero llegó), pero por una falla puntual del banco quedó marcado por error como fallido en nuestro sistema, por lo que no calificaba para entrar a ningún archivo ni payout. Lo detectamos en nuestro cuadre interno, se lo avisamos a su equipo antes de que se notara, y juntos decidimos incluirlo a mano en la rendición del día siguiente — sin que llegara a representar una diferencia real para ustedes. Así se resolvió, por ejemplo, un pago de $1.339.018 el 9 de junio. Otras veces el caso es más simple: una transacción se confirma justo al filo del cierre del día y solo hay que esperar un día para que se incorpore sola.</p>
           <span class="badge fixed">Sin impacto</span>
         </div>
       </div>
@@ -401,7 +401,7 @@
     {d:"02 jun", informado:2007727902, depositado:2007727902, flag:true, client:true, note:"Su equipo escribió por un leve atraso en el depósito; se confirmó resuelto el mismo día. El monto salió correcto."},
     {d:"03 jun", informado:1873114829, depositado:1873114829, flag:false, client:false, note:"Ajuste del día anterior aplicado; cuadrado."},
     {d:"04 jun", informado:1820871004, depositado:1820871004, flag:false, client:false, note:"Cuadrado sin diferencias."},
-    {d:"05–07 jun", informado:3973780042, depositado:3973780042, flag:true, client:false, note:"Detectamos en nuestro cuadre interno un pago de $1.339.018 con una intermitencia bancaria puntual. Se lo avisamos a su equipo con anticipación y decidimos juntos incluirlo en la rendición siguiente — nunca fue una diferencia para ustedes."},
+    {d:"05–07 jun", informado:3973780042, depositado:3973780042, flag:true, client:false, note:"Falso negativo: un pago de $1.339.018 fue exitoso pero quedó marcado como fallido por una falla puntual del banco. Se lo avisamos a su equipo antes de que se notara y decidimos juntos incluirlo a mano en la rendición siguiente — nunca fue una diferencia para ustedes."},
     {d:"08 jun", informado:1540052945, depositado:1540352945, flag:true, client:false, note:"Diferencia menor por timing, resuelta internamente antes de afectar el depósito."},
     {d:"09 jun", informado:1394612620, depositado:1394472620, flag:true, client:false, note:"Pequeño desajuste de tiempo, compensado al día siguiente sin que se notara en su cuenta."},
     {d:"10 jun", informado:1129895467, depositado:1129895467, flag:true, client:false, note:"Diferencia explicada por dos pagos en proceso de confirmación; se depositó el monto completo de todas formas."},
