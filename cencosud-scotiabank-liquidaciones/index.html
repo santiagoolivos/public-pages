@@ -1,3 +1,4 @@
+<meta charset="UTF-8">
 <title>Reporte de Liquidaciones — Cencosud Scotiabank</title>
 <style>
   :root{
@@ -118,7 +119,7 @@
     position:absolute; z-index:20; pointer-events:none;
     background:var(--violet-dark); color:#fdf7ff; border-radius:12px; padding:12px 14px;
     font-size:12.5px; line-height:1.5; box-shadow:0 12px 24px -8px rgba(0,0,0,.35);
-    width:220px; opacity:0; transform:translate(-50%,-8px); transition:opacity .12s ease;
+    width:232px; opacity:0; transform:translate(-50%,-8px); transition:opacity .12s ease;
   }
   .tooltip.show{opacity:1;}
   .tooltip .tt-date{font-weight:700; font-size:12.5px; margin-bottom:6px; color:#fff;}
@@ -287,6 +288,29 @@
   </section>
 
   <section>
+    <h2>Horario real de liquidación</h2>
+    <p class="sec-intro">Habíamos acordado depositar antes de las 11:00. Revisamos el horario exacto en que cada pago quedó listo en nuestro sistema (no solo los días en que ustedes nos escribieron) y lo mostramos completo acá, con la misma marca roja para los días en que reportaron un atraso.</p>
+    <div class="chart-card">
+      <div class="chart-head">
+        <div>
+          <b>Hora en que cada liquidación quedó lista</b>
+          <span class="sub">29 may — 5 jul 2026 · línea punteada = 11:00, la hora acordada</span>
+        </div>
+      </div>
+      <div class="chart-wrap">
+        <svg id="timeChart" viewBox="0 0 900 240" width="100%" height="240" role="img" aria-label="Horario diario de liquidación"></svg>
+      </div>
+      <div class="chart-legend">
+        <span><i style="background:#6d2e93"></i>Liquidado sin reclamo</span>
+        <span><i style="background:#b8483a"></i>Liquidado tarde, reportado por su equipo</span>
+        <span><i style="background:#c8bed0; border-radius:50%; width:8px; height:8px;"></i>Sin dato confiable ese día</span>
+      </div>
+      <div class="tooltip" id="tooltip2"></div>
+    </div>
+    <p style="font-size:13.5px; color:var(--ink-soft); margin-top:14px;">De los 24 días con dato confiable, <b>23 quedaron listos después de las 11:00</b> — la mayoría por pocos minutos, sin que se notara. Dos ejemplos de atraso grande que <b>nunca generaron un reclamo</b>: el 4 de junio (14:16) y el 8 de junio (12:56). Solo el 15 de junio se liquidó antes de la hora acordada (10:11).</p>
+  </section>
+
+  <section>
     <h2>Cómo funciona el proceso diario</h2>
     <p class="sec-intro">Todos los días hábiles seguimos los mismos tres pasos antes de depositar, para asegurarnos de que el monto que reciben sea siempre el correcto.</p>
     <div class="steps">
@@ -396,31 +420,31 @@
 <script>
 (function(){
   var DATA = [
-    {d:"29–31 may", informado:5179823490, depositado:5179823490, flag:false, client:false, note:"Cuadrado sin diferencias."},
-    {d:"01 jun", informado:2488083956, depositado:2487583956, flag:true, client:false, note:"Una transacción se confirmó justo al cierre del día. Diferencia menor, sin reclamo de su equipo."},
-    {d:"02 jun", informado:2007727902, depositado:2007727902, flag:true, client:true, note:"Su equipo escribió por un leve atraso en el depósito; se confirmó resuelto el mismo día. El monto salió correcto."},
-    {d:"03 jun", informado:1873114829, depositado:1873114829, flag:false, client:false, note:"Ajuste del día anterior aplicado; cuadrado."},
-    {d:"04 jun", informado:1820871004, depositado:1820871004, flag:false, client:false, note:"Cuadrado sin diferencias."},
-    {d:"05–07 jun", informado:3973780042, depositado:3973780042, flag:true, client:false, note:"Falso negativo: un pago de $1.339.018 fue exitoso pero quedó marcado como fallido por una falla puntual del banco. Se lo avisamos a su equipo antes de que se notara y decidimos juntos incluirlo a mano en la rendición siguiente — nunca fue una diferencia para ustedes."},
-    {d:"08 jun", informado:1540052945, depositado:1540352945, flag:true, client:false, note:"Diferencia menor por timing, resuelta internamente antes de afectar el depósito."},
-    {d:"09 jun", informado:1394612620, depositado:1394472620, flag:true, client:false, note:"Pequeño desajuste de tiempo, compensado al día siguiente sin que se notara en su cuenta."},
-    {d:"10 jun", informado:1129895467, depositado:1129895467, flag:true, client:false, note:"Diferencia explicada por dos pagos en proceso de confirmación; se depositó el monto completo de todas formas."},
-    {d:"11 jun", informado:843511350, depositado:843511350, flag:false, client:false, note:"Cuadrado sin diferencias."},
-    {d:"12–14 jun", informado:1501678817, depositado:1499473138, flag:true, client:false, note:"Tres transferencias de un cliente quedaron pendientes de confirmación bancaria; se incorporaron sin necesidad de aviso de su parte."},
-    {d:"15 jun", informado:672778505, depositado:672711538, flag:true, client:false, note:"Diferencia menor, resuelta en revisión interna."},
-    {d:"16 jun", informado:549637218, depositado:549605422, flag:true, client:false, note:"Reverso de un cobro duplicado, aplicado correctamente sin impacto para ustedes."},
-    {d:"17 jun", informado:503655655, depositado:503662655, flag:true, client:false, note:"Una transacción de un nuevo método de pago se sumó tras una validación adicional."},
-    {d:"18 jun", informado:670109895, depositado:670109895, flag:false, client:true, note:"El monto cuadró exacto, pero el depósito salió más tarde de lo habitual; su equipo lo reportó y se resolvió ese mismo día."},
-    {d:"19–21 jun", informado:1917355960, depositado:1916774822, flag:true, client:false, note:"Dos pagos quedaron registrados dos veces en el reporte del día (el conteo doble descrito abajo); el depósito real fue el correcto y nunca representó una diferencia para ustedes."},
-    {d:"22 jun", informado:1086518174, depositado:1085937136, flag:false, client:true, note:"Se descontó el ajuste del día anterior; el depósito salió más tarde de lo habitual y su equipo lo reportó como caso crítico. Resuelto el mismo día."},
-    {d:"23 jun", informado:1247306012, depositado:1247306012, flag:false, client:true, note:"El monto cuadró, pero el depósito volvió a salir tarde; su equipo lo reportó y se resolvió ese mismo día."},
-    {d:"24 jun", informado:1432636208, depositado:1432636208, flag:false, client:false, note:"Cuadrado sin diferencias."},
-    {d:"25 jun", informado:1224885950, depositado:1224885950, flag:false, client:false, note:"Cuadrado sin diferencias."},
-    {d:"26–29 jun", informado:4841485996, depositado:4840467605, flag:false, client:true, note:"El depósito salió más tarde de lo acordado (11:00) — su equipo lo reportó y escaló el patrón de atrasos recurrentes. Resuelto el mismo día; a partir de aquí ajustamos el flujo de aprobación."},
-    {d:"30 jun", informado:2257486137, depositado:2257486137, flag:false, client:true, note:"Su equipo reportó nuevamente un atraso en el depósito. Resuelto el mismo día — este caso aceleró el cambio a un flujo de aprobación independiente para Cencosud Scotiabank."},
-    {d:"01 jul", informado:2257036841, depositado:2257036841, flag:false, client:false, note:"Cuadrado sin diferencias."},
-    {d:"02 jul", informado:1889756891, depositado:1889756891, flag:false, client:false, note:"Cuadrado sin diferencias."},
-    {d:"03–05 jul", informado:4904815177, depositado:4904211755, flag:true, client:false, note:"Caso más reciente: un pago quedó registrado dos veces y otro está en proceso de confirmación bancaria (ver detalle abajo). Sin reclamo de su equipo a la fecha de este reporte."}
+    {d:"29–31 may", informado:5179823490, depositado:5179823490, flag:false, client:false, time:"11:14", note:"Cuadrado sin diferencias."},
+    {d:"01 jun", informado:2488083956, depositado:2487583956, flag:true, client:false, time:"11:06", note:"Una transacción se confirmó justo al cierre del día. Diferencia menor, sin reclamo de su equipo."},
+    {d:"02 jun", informado:2007727902, depositado:2007727902, flag:true, client:true, time:"11:51", note:"Su equipo escribió por un leve atraso en el depósito; se confirmó resuelto el mismo día. El monto salió correcto."},
+    {d:"03 jun", informado:1873114829, depositado:1873114829, flag:false, client:false, time:"11:27", note:"Ajuste del día anterior aplicado; cuadrado."},
+    {d:"04 jun", informado:1820871004, depositado:1820871004, flag:false, client:false, time:"14:16", note:"Cuadrado en monto, pero fue el día más tardío del período — más de 3 horas después de lo acordado, sin que su equipo lo reportara."},
+    {d:"05–07 jun", informado:3973780042, depositado:3973780042, flag:true, client:false, time:"11:44", note:"Falso negativo: un pago de $1.339.018 fue exitoso pero quedó marcado como fallido por una falla puntual del banco. Se lo avisamos a su equipo antes de que se notara y decidimos juntos incluirlo a mano en la rendición siguiente — nunca fue una diferencia para ustedes."},
+    {d:"08 jun", informado:1540052945, depositado:1540352945, flag:true, client:false, time:"12:56", note:"Diferencia menor por timing. El depósito también salió bastante tarde ese día, sin que generara un reclamo de su parte."},
+    {d:"09 jun", informado:1394612620, depositado:1394472620, flag:true, client:false, time:"11:43", note:"Pequeño desajuste de tiempo, compensado al día siguiente sin que se notara en su cuenta."},
+    {d:"10 jun", informado:1129895467, depositado:1129895467, flag:true, client:false, time:"11:24", note:"Diferencia explicada por dos pagos en proceso de confirmación; se depositó el monto completo de todas formas."},
+    {d:"11 jun", informado:843511350, depositado:843511350, flag:false, client:false, time:"12:13", note:"Monto cuadrado, pero el depósito salió más de una hora tarde sin que se reportara."},
+    {d:"12–14 jun", informado:1501678817, depositado:1499473138, flag:true, client:false, time:null, note:"Tres transferencias de un cliente quedaron pendientes de confirmación bancaria; se incorporaron sin necesidad de aviso de su parte. No tenemos un horario preciso y confiable de depósito para este día en particular."},
+    {d:"15 jun", informado:672778505, depositado:672711538, flag:true, client:false, time:"10:11", note:"Diferencia menor, resuelta en revisión interna. Este fue el único día del período liquidado antes de las 11:00."},
+    {d:"16 jun", informado:549637218, depositado:549605422, flag:true, client:false, time:"11:08", note:"Reverso de un cobro duplicado, aplicado correctamente sin impacto para ustedes."},
+    {d:"17 jun", informado:503655655, depositado:503662655, flag:true, client:false, time:"11:18", note:"Una transacción de un nuevo método de pago se sumó tras una validación adicional."},
+    {d:"18 jun", informado:670109895, depositado:670109895, flag:false, client:true, time:"11:48", note:"El monto cuadró exacto, pero el depósito salió más tarde de lo habitual; su equipo lo reportó y se resolvió ese mismo día."},
+    {d:"19–21 jun", informado:1917355960, depositado:1916774822, flag:true, client:false, time:"11:09", note:"Dos pagos quedaron registrados dos veces en el reporte del día (el conteo doble descrito abajo); el depósito real fue el correcto y nunca representó una diferencia para ustedes."},
+    {d:"22 jun", informado:1086518174, depositado:1085937136, flag:false, client:true, time:"11:51", note:"Se descontó el ajuste del día anterior; el depósito salió más tarde de lo habitual y su equipo lo reportó como caso crítico. Resuelto el mismo día."},
+    {d:"23 jun", informado:1247306012, depositado:1247306012, flag:false, client:true, time:"11:31", note:"El monto cuadró, pero el depósito volvió a salir tarde; su equipo lo reportó y se resolvió ese mismo día."},
+    {d:"24 jun", informado:1432636208, depositado:1432636208, flag:false, client:false, time:"11:29", note:"Cuadrado en monto; el depósito salió algo después de las 11:00 sin generar reclamo."},
+    {d:"25 jun", informado:1224885950, depositado:1224885950, flag:false, client:false, time:"11:07", note:"Cuadrado sin diferencias."},
+    {d:"26–29 jun", informado:4841485996, depositado:4840467605, flag:false, client:true, time:"12:10", note:"El depósito salió más tarde de lo acordado (11:00) — su equipo lo reportó y escaló el patrón de atrasos recurrentes. Resuelto el mismo día; a partir de aquí ajustamos el flujo de aprobación."},
+    {d:"30 jun", informado:2257486137, depositado:2257486137, flag:false, client:true, time:"12:10", note:"Su equipo reportó nuevamente un atraso en el depósito. Un primer intento de pago quedó listo a las 11:32, pero un problema técnico obligó a rehacerlo — quedó liquidado a las 12:10. Este caso aceleró el cambio a un flujo de aprobación independiente para Cencosud Scotiabank."},
+    {d:"01 jul", informado:2257036841, depositado:2257036841, flag:false, client:false, time:"11:17", note:"Cuadrado sin diferencias."},
+    {d:"02 jul", informado:1889756891, depositado:1889756891, flag:false, client:false, time:"11:38", note:"Cuadrado en monto; el depósito salió después de las 11:00 sin generar reclamo."},
+    {d:"03–05 jul", informado:4904815177, depositado:4904211755, flag:true, client:false, time:"11:18", note:"Caso más reciente: un pago quedó registrado dos veces y otro está en proceso de confirmación bancaria (ver detalle abajo). Sin reclamo de su equipo a la fecha de este reporte."}
   ];
 
   function clp(n){ return "$" + Math.round(n).toLocaleString("es-CL"); }
@@ -444,9 +468,12 @@
       var diffTxt = diff === 0 ? "Sin diferencia" : (diff > 0 ? "+" : "") + diff.toLocaleString("es-CL");
       var statusTxt = item.client ? "Atraso real, reportado por ustedes" : (item.flag ? "Ajuste interno, sin impacto" : "Sin novedad");
       var statusColor = item.client ? "#f3c9c0" : (item.flag ? "#f0d9b0" : "#bfe0cf");
+      var timeColor = !item.time ? "#e2cfec" : (item.time > "11:00" ? "#f3c9c0" : "#bfe0cf");
+      var timeTxt = item.time ? item.time + " hrs" : "Sin dato";
       tooltip.innerHTML =
         '<div class="tt-date">' + item.d + '</div>' +
         '<div class="tt-row"><span>Estado</span><b style="color:' + statusColor + '">' + statusTxt + '</b></div>' +
+        '<div class="tt-row"><span>Hora liquidación</span><b style="color:' + timeColor + '">' + timeTxt + '</b></div>' +
         '<div class="tt-row"><span>Informado</span><b>' + clp(item.informado) + '</b></div>' +
         '<div class="tt-row"><span>Depositado</span><b>' + clp(item.depositado) + '</b></div>' +
         '<div class="tt-row"><span>Diferencia</span><b>' + diffTxt + '</b></div>' +
@@ -475,5 +502,101 @@
       bar.classList.toggle("dim", only && bar.dataset.client === "0");
     });
   });
+
+  // ---------- chart 2: horario real de liquidación ----------
+  (function(){
+    var svgNS = "http://www.w3.org/2000/svg";
+    var svg = document.getElementById("timeChart");
+    var tooltip2 = document.getElementById("tooltip2");
+    var chartCard2 = tooltip2.closest(".chart-card");
+
+    var MIN_MIN = 600;   // 10:00
+    var MAX_MIN = 900;   // 15:00
+    var Y_TOP = 20, Y_BOTTOM = 205;
+    var X_LEFT = 46, X_RIGHT = 880;
+    var step = (X_RIGHT - X_LEFT) / (DATA.length - 1);
+
+    function toMinutes(t){
+      if(!t) return null;
+      var parts = t.split(":");
+      return parseInt(parts[0],10)*60 + parseInt(parts[1],10);
+    }
+    function yFor(min){ return Y_TOP + (min - MIN_MIN) / (MAX_MIN - MIN_MIN) * (Y_BOTTOM - Y_TOP); }
+    function xFor(i){ return X_LEFT + i * step; }
+    function el(tag, attrs){
+      var e = document.createElementNS(svgNS, tag);
+      for(var k in attrs){ e.setAttribute(k, attrs[k]); }
+      return e;
+    }
+
+    // hour gridlines + labels
+    [10,11,12,13,14,15].forEach(function(h){
+      var y = yFor(h*60);
+      svg.appendChild(el("line", {x1:X_LEFT, y1:y, x2:X_RIGHT, y2:y, stroke:"#e6dcee", "stroke-width":1}));
+      svg.appendChild(el("text", {x:8, y:y+4, "font-size":11, fill:"#6d5c7c", "font-family":"-apple-system,Segoe UI,sans-serif"})).textContent = h + ":00";
+    });
+
+    // 11:00 reference line (highlighted)
+    var refY = yFor(660);
+    var refLine = el("line", {x1:X_LEFT, y1:refY, x2:X_RIGHT, y2:refY, stroke:"#b8483a", "stroke-width":1.5, "stroke-dasharray":"5,4"});
+    svg.appendChild(refLine);
+    var refLabel = el("text", {x:X_RIGHT-2, y:refY-6, "text-anchor":"end", "font-size":11, fill:"#b8483a", "font-family":"-apple-system,Segoe UI,sans-serif", "font-weight":"600"});
+    refLabel.textContent = "11:00 — hora acordada";
+    svg.appendChild(refLabel);
+
+    // connecting line (skip gaps where time is null)
+    var pathD = "";
+    DATA.forEach(function(item, i){
+      var min = toMinutes(item.time);
+      if(min === null){ pathD += ""; return; }
+      var x = xFor(i), y = yFor(Math.min(min, MAX_MIN));
+      pathD += (pathD === "" || toMinutes(DATA[i-1] ? DATA[i-1].time : null) === null ? "M" : "L") + x + "," + y + " ";
+    });
+    svg.appendChild(el("path", {d:pathD, fill:"none", stroke:"#c9b8d6", "stroke-width":1.5}));
+
+    // dots
+    DATA.forEach(function(item, i){
+      var x = xFor(i);
+      var min = toMinutes(item.time);
+      var y = min === null ? (Y_BOTTOM + 8) : yFor(Math.min(min, MAX_MIN));
+      var r = min === null ? 4 : 5.5;
+      var fill = min === null ? "#c8bed0" : (item.client ? "#b8483a" : "#6d2e93");
+      var dot = el("circle", {cx:x, cy:y, r:r, fill:fill, stroke:"#fff", "stroke-width":1.3, style:"cursor:pointer"});
+      dot.tabIndex = 0;
+      svg.appendChild(dot);
+
+      function showTip2(){
+        var min2 = toMinutes(item.time);
+        var timeTxt = item.time ? item.time + " hrs" : "Sin dato confiable";
+        var afterTxt = min2 === null ? "" : (min2 > 660 ? " · después de las 11:00" : " · antes de las 11:00");
+        var statusTxt = item.client ? "Reportado por su equipo" : "Sin reclamo";
+        tooltip2.innerHTML =
+          '<div class="tt-date">' + item.d + '</div>' +
+          '<div class="tt-row"><span>Hora</span><b>' + timeTxt + afterTxt + '</b></div>' +
+          '<div class="tt-row"><span>Estado</span><b>' + statusTxt + '</b></div>';
+        var pt = svg.createSVGPoint(); pt.x = x; pt.y = y;
+        var screenPt = pt.matrixTransform(svg.getScreenCTM());
+        var cardRect = chartCard2.getBoundingClientRect();
+        var left = screenPt.x - cardRect.left;
+        left = Math.min(Math.max(left, 116), cardRect.width - 116);
+        var top = screenPt.y - cardRect.top;
+        tooltip2.style.left = left + "px";
+        tooltip2.style.top = (top - 12) + "px";
+        tooltip2.classList.add("show");
+      }
+      function hideTip2(){ tooltip2.classList.remove("show"); }
+      dot.addEventListener("mouseenter", showTip2);
+      dot.addEventListener("focus", showTip2);
+      dot.addEventListener("mouseleave", hideTip2);
+      dot.addEventListener("blur", hideTip2);
+    });
+
+    // x-axis date labels (first, middle, last)
+    [0, Math.floor((DATA.length-1)/2), DATA.length-1].forEach(function(i){
+      var t = el("text", {x:xFor(i), y:232, "text-anchor": i===0 ? "start" : (i===DATA.length-1 ? "end" : "middle"), "font-size":11, fill:"#6d5c7c", "font-family":"-apple-system,Segoe UI,sans-serif"});
+      t.textContent = DATA[i].d;
+      svg.appendChild(t);
+    });
+  })();
 })();
 </script>
