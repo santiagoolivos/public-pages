@@ -1,0 +1,410 @@
+<title>WOM — Plan de Integración</title>
+<style>
+  :root {
+    --bg: #FAF9FC;
+    --bg-raised: #FFFFFF;
+    --ink: #171423;
+    --ink-soft: #4B4558;
+    --line: #E4DEEC;
+    --line-strong: #CFC5DE;
+    --accent: #3D0070;
+    --accent-tint: #F1E6FB;
+    --accent-2: #E4007C;
+    --accent-2-tint: #FDE3F0;
+    --slate: #6B6478;
+    --slate-tint: #EDEAF2;
+    --success: #1D7A5F;
+    --success-tint: #E1F3EC;
+    --amber: #93610B;
+    --amber-tint: #FBEED2;
+    --critical: #B02338;
+    --critical-tint: #FBE2E6;
+    --font-display: ui-monospace, "SF Mono", "Cascadia Code", "Roboto Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+    --font-body: -apple-system, "Segoe UI", system-ui, Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #14111E;
+      --bg-raised: #1C1829;
+      --ink: #F1ECFA;
+      --ink-soft: #B9AFC9;
+      --line: #322A40;
+      --line-strong: #453A56;
+      --accent: #B084E8;
+      --accent-tint: #2A1F3C;
+      --accent-2: #FF6FB0;
+      --accent-2-tint: #34202B;
+      --slate: #9C93AC;
+      --slate-tint: #241F30;
+      --success: #4FD8A0;
+      --success-tint: #14261F;
+      --amber: #E3A548;
+      --amber-tint: #2C2312;
+      --critical: #FF7B85;
+      --critical-tint: #2E1A1E;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #14111E; --bg-raised: #1C1829; --ink: #F1ECFA; --ink-soft: #B9AFC9;
+    --line: #322A40; --line-strong: #453A56; --accent: #B084E8; --accent-tint: #2A1F3C;
+    --accent-2: #FF6FB0; --accent-2-tint: #34202B; --slate: #9C93AC; --slate-tint: #241F30;
+    --success: #4FD8A0; --success-tint: #14261F; --amber: #E3A548; --amber-tint: #2C2312;
+    --critical: #FF7B85; --critical-tint: #2E1A1E;
+  }
+  :root[data-theme="light"] {
+    --bg: #FAF9FC; --bg-raised: #FFFFFF; --ink: #171423; --ink-soft: #4B4558;
+    --line: #E4DEEC; --line-strong: #CFC5DE; --accent: #3D0070; --accent-tint: #F1E6FB;
+    --accent-2: #E4007C; --accent-2-tint: #FDE3F0; --slate: #6B6478; --slate-tint: #EDEAF2;
+    --success: #1D7A5F; --success-tint: #E1F3EC; --amber: #93610B; --amber-tint: #FBEED2;
+    --critical: #B02338; --critical-tint: #FBE2E6;
+  }
+
+  * { box-sizing: border-box; }
+  body { background: var(--bg); color: var(--ink); }
+  .page {
+    font-family: var(--font-body);
+    color: var(--ink);
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+    line-height: 1.55;
+  }
+  .eyebrow {
+    font-family: var(--font-display);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent-2);
+    font-weight: 600;
+  }
+  h1 {
+    font-family: var(--font-display);
+    font-size: clamp(26px, 4vw, 34px);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin: 10px 0 6px;
+    text-wrap: balance;
+  }
+  .subtitle {
+    color: var(--ink-soft);
+    font-size: 15px;
+    max-width: 62ch;
+    margin: 0 0 28px;
+  }
+  h2 {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 700;
+    margin: 0 0 4px;
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+  }
+  h2 .num {
+    color: var(--accent-2);
+    font-size: 14px;
+  }
+  .section-note {
+    color: var(--ink-soft);
+    font-size: 14px;
+    max-width: 68ch;
+    margin: 6px 0 22px;
+  }
+  section {
+    margin-bottom: 56px;
+  }
+  .callout {
+    border: 1px solid var(--line-strong);
+    background: var(--amber-tint);
+    color: var(--ink);
+    border-left: 3px solid var(--amber);
+    border-radius: 6px;
+    padding: 12px 16px;
+    font-size: 13.5px;
+    margin: 0 0 24px;
+  }
+  .callout strong { color: var(--amber); font-family: var(--font-display); font-size: 12px; letter-spacing: 0.03em; text-transform: uppercase; display: block; margin-bottom: 4px; }
+
+  /* Gantt */
+  .gantt-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: var(--bg-raised); padding: 20px 20px 26px; }
+  .gantt {
+    display: grid;
+    grid-template-columns: 200px repeat(19, minmax(24px, 1fr));
+    grid-template-rows: 22px repeat(6, 44px);
+    column-gap: 0;
+    row-gap: 6px;
+    min-width: 760px;
+    position: relative;
+  }
+  .tick {
+    grid-row: 1;
+    font-family: var(--font-display);
+    font-size: 10.5px;
+    color: var(--slate);
+    align-self: end;
+    border-left: 1px solid var(--line);
+    padding-left: 4px;
+  }
+  .phase-label {
+    grid-column: 1;
+    align-self: center;
+    padding-right: 14px;
+  }
+  .phase-label .name { font-weight: 600; font-size: 13px; color: var(--ink); }
+  .phase-label .dur { display: block; font-family: var(--font-display); font-size: 11px; color: var(--slate); margin-top: 2px; }
+  .bar {
+    align-self: center;
+    height: 20px;
+    border-radius: 5px;
+    min-width: 14px;
+  }
+  .bar.tone-slate { background: var(--slate); }
+  .bar.tone-accent { background: var(--accent); }
+  .bar.tone-accent-soft { background: color-mix(in srgb, var(--accent) 62%, var(--slate) 38%); }
+  .bar.tone-accent2 { background: var(--accent-2); }
+  .bar.tone-babysit {
+    background: repeating-linear-gradient(135deg, var(--slate) 0 10px, color-mix(in srgb, var(--slate) 78%, black 10%) 10px 20px);
+  }
+  .milestone {
+    grid-row: 2 / 8;
+    justify-self: end;
+    border-right: 1px dashed var(--line-strong);
+    position: relative;
+    padding-right: 0;
+  }
+  .milestone .diamond {
+    position: absolute; top: -4px; right: -5px;
+    width: 9px; height: 9px; background: var(--accent-2);
+    border-radius: 2px; transform: rotate(45deg);
+  }
+  .milestone .pct {
+    position: absolute; top: -22px; right: -6px;
+    transform: translateX(50%);
+    font-family: var(--font-display); font-size: 11px; font-weight: 700;
+    color: var(--accent-2); white-space: nowrap;
+  }
+  .legend { display: flex; gap: 18px; flex-wrap: wrap; margin-top: 18px; font-size: 12.5px; color: var(--ink-soft); }
+  .legend .dot { display: inline-block; width: 9px; height: 9px; border-radius: 2px; margin-right: 6px; vertical-align: -1px; }
+
+  /* Architecture diagram */
+  .diagram-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: var(--bg-raised); padding: 12px; }
+  .diagram-wrap svg { display: block; min-width: 720px; width: 100%; height: auto; }
+  .node-box { fill: var(--bg-raised); stroke: var(--line-strong); stroke-width: 1.4; rx: 8; }
+  .node-title { font-family: var(--font-display); font-weight: 600; }
+  .node-sub { font-family: var(--font-body); fill: var(--ink-soft); }
+  .zone-pci { fill: var(--accent-tint); stroke: var(--accent); stroke-dasharray: 5 4; stroke-width: 1.2; }
+  .zone-wom { fill: var(--slate-tint); stroke: var(--slate); stroke-dasharray: 5 4; stroke-width: 1.2; }
+  .zone-label { font-family: var(--font-display); font-size: 11px; letter-spacing: 0.03em; text-transform: uppercase; }
+  .flow-line { stroke: var(--ink-soft); stroke-width: 1.6; fill: none; }
+  .flow-line.dashed { stroke-dasharray: 4 4; stroke: var(--amber); }
+  .tbd-box { fill: var(--amber-tint); stroke: var(--amber); stroke-width: 1.4; stroke-dasharray: 4 3; rx: 8; }
+
+  /* Table */
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { font-family: var(--font-display); font-size: 11px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--slate); font-weight: 600; }
+  td.item { font-weight: 600; width: 20%; }
+  .table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: var(--bg-raised); }
+  .table-wrap table { min-width: 640px; }
+
+  .pill {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-family: var(--font-display); font-size: 10.5px; font-weight: 700;
+    letter-spacing: 0.03em; text-transform: uppercase;
+    padding: 3px 8px; border-radius: 999px;
+  }
+  .pill.pending { background: var(--amber-tint); color: var(--amber); }
+  .pill.gap { background: var(--critical-tint); color: var(--critical); }
+  .pill.ready { background: var(--success-tint); color: var(--success); }
+
+  footer {
+    border-top: 1px solid var(--line);
+    padding-top: 18px;
+    font-size: 12px;
+    color: var(--slate);
+  }
+
+  @media (max-width: 640px) {
+    .page { padding: 28px 16px 60px; }
+  }
+</style>
+
+<div class="page">
+  <p class="eyebrow">Toku × WOM — Interno / Ops</p>
+  <h1>Plan de integración — Pasarela de Pagos Ecommerce store.wom.cl</h1>
+  <p class="subtitle">Borrador de cronograma e integración técnica para la RFP de pago embebido. Duraciones estimadas: base de discusión para que Ops confirme antes de comprometerlas con WOM.</p>
+
+  <section id="plan">
+    <h2><span class="num">01</span> Plan de implementación</h2>
+    <p class="section-note">Estructurado sobre los 4 hitos de pago que define el propio RFP (25 / 25 / 35 / 15%). Cada hito se dispara al cerrar la fase correspondiente.</p>
+
+    <div class="callout"><strong>Estado del dato</strong>Las duraciones por fase son un estimado de trabajo, no un compromiso — deben validarse con Ops (capacidad del equipo) antes de incluirlas en la propuesta económica.</div>
+
+    <div class="gantt-wrap">
+      <div class="gantt">
+        <div class="tick" style="grid-column:2;">Sem 1</div>
+        <div class="tick" style="grid-column:4;">Sem 3</div>
+        <div class="tick" style="grid-column:9;">Sem 8</div>
+        <div class="tick" style="grid-column:11;">Sem 10</div>
+        <div class="tick" style="grid-column:12;">Sem 11</div>
+        <div class="tick" style="grid-column:13;">Sem 12</div>
+        <div class="tick" style="grid-column:20;">Sem 19</div>
+
+        <div class="phase-label" style="grid-row:2;"><span class="name">Kickoff &amp; discovery</span><span class="dur">Sem 1–2 · RACI, arquitectura, contratos</span></div>
+        <div class="bar tone-slate" style="grid-row:2; grid-column:2/4;"></div>
+
+        <div class="phase-label" style="grid-row:3;"><span class="name">Desarrollo</span><span class="dur">Sem 3–7 · checkout + Magento + webhook</span></div>
+        <div class="bar tone-accent" style="grid-row:3; grid-column:4/9;"></div>
+
+        <div class="phase-label" style="grid-row:4;"><span class="name">QA end-to-end</span><span class="dur">Sem 8–9 · flujos, 3DS2, cuotas</span></div>
+        <div class="bar tone-accent-soft" style="grid-row:4; grid-column:9/11;"></div>
+
+        <div class="phase-label" style="grid-row:5;"><span class="name">Certificación &amp; demo</span><span class="dur">Sem 10 · Certilap, ciberseguridad</span></div>
+        <div class="bar tone-slate" style="grid-row:5; grid-column:11/12;"></div>
+
+        <div class="phase-label" style="grid-row:6;"><span class="name">Go live progresivo</span><span class="dur">Sem 11 · canary → 100%</span></div>
+        <div class="bar tone-accent2" style="grid-row:6; grid-column:12/13;"></div>
+
+        <div class="phase-label" style="grid-row:7;"><span class="name">Acompañamiento post-productivo</span><span class="dur">Sem 12–19 · babysitting 24x7 (2 meses)</span></div>
+        <div class="bar tone-babysit" style="grid-row:7; grid-column:13/21;"></div>
+
+        <div class="milestone" style="grid-column:9/10;"><span class="diamond"></span><span class="pct">Hito 1 · 25%</span></div>
+        <div class="milestone" style="grid-column:11/12;"><span class="diamond"></span><span class="pct">Hito 2 · 25%</span></div>
+        <div class="milestone" style="grid-column:13/14;"><span class="diamond"></span><span class="pct">Hito 3 · 35%</span></div>
+        <div class="milestone" style="grid-column:21/22;"><span class="diamond"></span><span class="pct">Hito 4 · 15%</span></div>
+      </div>
+      <div class="legend">
+        <span><span class="dot" style="background:var(--slate)"></span>Preparación / soporte</span>
+        <span><span class="dot" style="background:var(--accent)"></span>Desarrollo</span>
+        <span><span class="dot" style="background:color-mix(in srgb, var(--accent) 62%, var(--slate) 38%)"></span>QA</span>
+        <span><span class="dot" style="background:var(--accent-2)"></span>Go live</span>
+        <span>◆ <span style="color:var(--accent-2); font-weight:700;">Hito de pago</span> (RFP §6b)</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="arquitectura">
+    <h2><span class="num">02</span> Arquitectura de integración</h2>
+    <p class="section-note">Flujo técnico propuesto: checkout embebido (sin redirección de dominio), tokenización en el borde, y separación clara de alcance PCI entre Toku y WOM.</p>
+
+    <div class="diagram-wrap">
+      <svg viewBox="0 0 920 640" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="arrow" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto">
+            <path d="M0,0 L8,4 L0,8 Z" fill="var(--ink-soft)"></path>
+          </marker>
+          <marker id="arrow-amber" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto">
+            <path d="M0,0 L8,4 L0,8 Z" fill="var(--amber)"></path>
+          </marker>
+        </defs>
+
+        <!-- Zones -->
+        <rect class="zone-pci" x="30" y="40" width="420" height="410" rx="14"></rect>
+        <text class="zone-label" x="44" y="30" fill="var(--accent)">Dentro del alcance PCI — Toku</text>
+
+        <rect class="zone-wom" x="500" y="330" width="390" height="230" rx="14"></rect>
+        <text class="zone-label" x="514" y="320" fill="var(--slate)">Fuera del alcance PCI (SAQ A) — WOM</text>
+
+        <!-- Frontend -->
+        <rect class="node-box" x="50" y="60" width="380" height="100"></rect>
+        <text class="node-title" x="66" y="82" font-size="13" fill="var(--ink)">store.wom.cl — Gatsby / React</text>
+        <rect x="68" y="94" width="344" height="52" rx="7" fill="var(--accent-2-tint)" stroke="var(--accent-2)" stroke-width="1.2"></rect>
+        <text class="node-title" x="80" y="115" font-size="12" fill="var(--accent-2)">TokuCheckoutForm — iFrame</text>
+        <text class="node-sub" x="80" y="133" font-size="11">PAN / CVV aislados, nunca tocan servidores de WOM</text>
+
+        <line class="flow-line" x1="240" y1="160" x2="240" y2="195" marker-end="url(#arrow)"></line>
+
+        <!-- Tokenization -->
+        <rect class="node-box" x="50" y="200" width="380" height="60"></rect>
+        <text class="node-title" x="66" y="225" font-size="13" fill="var(--ink)">Toku Secure API — Tokenización</text>
+        <text class="node-sub" x="66" y="243" font-size="11">chd-validator → Vault (CVV nunca se almacena)</text>
+
+        <line class="flow-line" x1="240" y1="260" x2="240" y2="295" marker-end="url(#arrow)"></line>
+
+        <!-- Fraud / 3DS -->
+        <rect class="node-box" x="50" y="300" width="380" height="60"></rect>
+        <text class="node-title" x="66" y="325" font-size="13" fill="var(--ink)">Motor antifraude (Kount) + 3DS2 (Cybersource)</text>
+        <text class="node-sub" x="66" y="343" font-size="11">Reglas internas · device fingerprint · omniscore</text>
+
+        <line class="flow-line" x1="240" y1="360" x2="240" y2="395" marker-end="url(#arrow)"></line>
+
+        <!-- PSP -->
+        <rect class="node-box" x="50" y="400" width="380" height="55" fill="var(--accent-tint)" stroke="var(--accent)"></rect>
+        <text class="node-title" x="66" y="424" font-size="13" fill="var(--accent)">PSP Klap — Autorización</text>
+        <text class="node-sub" x="66" y="442" font-size="11">internal_psp · toku_onetime (producto ya productivo)</text>
+
+        <!-- To webhook / Magento -->
+        <line class="flow-line" x1="430" y1="420" x2="520" y2="420" marker-end="url(#arrow)"></line>
+        <rect class="node-box" x="530" y="395" width="180" height="50"></rect>
+        <text class="node-title" x="544" y="416" font-size="12" fill="var(--ink)">Webhook</text>
+        <text class="node-sub" x="544" y="433" font-size="10.5">transaction.success / failed</text>
+
+        <line class="flow-line" x1="710" y1="420" x2="750" y2="420" marker-end="url(#arrow)"></line>
+        <rect class="node-box" x="760" y="395" width="120" height="50"></rect>
+        <text class="node-title" x="772" y="416" font-size="12" fill="var(--ink)">Magento</text>
+        <text class="node-sub" x="772" y="433" font-size="10.5">Estado de la orden</text>
+
+        <!-- To data out / ETL -->
+        <line class="flow-line" x1="240" y1="455" x2="240" y2="490" marker-end="url(#arrow)"></line>
+        <rect class="node-box" x="50" y="495" width="380" height="55"></rect>
+        <text class="node-title" x="66" y="519" font-size="13" fill="var(--ink)">Data Out — ETL reportes de pago</text>
+        <text class="node-sub" x="66" y="537" font-size="11">Sin Data In: sesión de pago se crea on-demand por compra</text>
+
+        <line class="flow-line" x1="430" y1="522" x2="520" y2="522" marker-end="url(#arrow)"></line>
+        <rect class="node-box" x="530" y="497" width="180" height="50"></rect>
+        <text class="node-title" x="544" y="518" font-size="12" fill="var(--ink)">WOM BI</text>
+        <text class="node-sub" x="544" y="535" font-size="10.5">Conciliación diaria</text>
+
+        <line class="flow-line dashed" x1="710" y1="522" x2="750" y2="522" marker-end="url(#arrow-amber)"></line>
+        <rect class="tbd-box" x="760" y="490" width="120" height="65"></rect>
+        <text class="node-title" x="770" y="512" font-size="11.5" fill="var(--amber)">ZSmart (BSS)</text>
+        <text class="node-sub" x="770" y="528" font-size="10">Cuotas en boleta</text>
+        <text class="node-sub" x="770" y="542" font-size="10" fill="var(--amber)">A definir con WOM</text>
+      </svg>
+    </div>
+  </section>
+
+  <section id="pendientes">
+    <h2><span class="num">03</span> Ítems Ops de la hoja "Técnico y Operativo"</h2>
+    <p class="section-note">Los cinco puntos asignados a Ops en el checklist, con lo que ya se puede resolver y lo que sigue abierto.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Ítem RFP</th><th>Estado</th><th>Qué falta / next step</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="item">Modalidad de integración</td>
+            <td><span class="pill ready">Definida</span></td>
+            <td>iFrame embebido + tokenización (TokuCheckoutForm) sobre PSP Klap, modelo one-time. Ver diagrama arriba — listo para incluir en la propuesta técnica.</td>
+          </tr>
+          <tr>
+            <td class="item">Integración con Magento</td>
+            <td><span class="pill gap">Sin precedente</span></td>
+            <td>No hay conector Magento documentado en Toku. Requiere desarrollo a medida (plugin/extensión que llame al Checkout Session y reciba el webhook). Dimensionar esfuerzo con Ingeniería antes de cotizar.</td>
+          </tr>
+          <tr>
+            <td class="item">Integración con ZSmart (BSS)</td>
+            <td><span class="pill pending">A definir con WOM</span></td>
+            <td>Es sistema interno de WOM (cuotas en boleta, validación de cliente) — no hay documentación de Toku al respecto. Necesita levantamiento técnico directo con el equipo de BSS de WOM, no es algo resoluble solo con documentación de Toku.</td>
+          </tr>
+          <tr>
+            <td class="item">Plan de implementación</td>
+            <td><span class="pill ready">Borrador listo</span></td>
+            <td>Cronograma de 19 semanas propuesto arriba, mapeado a los 4 hitos de pago del RFP. Ops debe validar duraciones reales antes de comprometerlas.</td>
+          </tr>
+          <tr>
+            <td class="item">Evidencia de integración en producción</td>
+            <td><span class="pill pending">Pedir a Sales/CS</span></td>
+            <td>No encontré un caso público de embedded checkout ecommerce (fuera de cobranza/recurrencia) en la documentación revisada. Pedir a Sales/CS un cliente de referencia con TokuCheckoutForm en producción, o grabar una demo propia en sandbox si no existe.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer>
+    Borrador de trabajo — basado en la RFP "Pasarela de Pagos Ecommerce store.wom.cl", la hoja "Técnico y Operativo" del TO DO de WOM, y arquitectura interna de Toku (payins-regional: cards, fraud, checkout). Duraciones del plan de implementación son estimadas.
+  </footer>
+</div>
