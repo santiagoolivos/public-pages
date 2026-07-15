@@ -5,6 +5,7 @@ Páginas públicas generadas con Claude Code, desplegadas con GitHub Pages.
 ## Proyectos
 
 - **[Luna de miel — Tailandia, Vietnam, Camboya y Bali](https://santiagoolivos.github.io/public-pages/luna-de-miel-tailandia-vietnam-bali/)** — página principal del viaje, con el [análisis de ritmo, hoteles y actividades](https://santiagoolivos.github.io/public-pages/luna-de-miel-tailandia-vietnam-bali/ritmo.html) y la [comparación de presupuesto agencia vs. DIY](https://santiagoolivos.github.io/public-pages/luna-de-miel-tailandia-vietnam-bali/presupuesto.html).
+- **[Botones bancarios — Cencosud Scotiabank (CAT)](https://santiagoolivos.github.io/public-pages/cencosud-scotiabank-botones-bancarios/)** — demo técnica de la propuesta de flujo, PSP vs PST, cambios requeridos y Gantt de implementación.
 
 ## Cómo agregar un proyecto nuevo
 
