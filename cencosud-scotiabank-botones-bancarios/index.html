@@ -90,7 +90,75 @@
   .bb-footerbar-logos{ display:flex; align-items:center; gap:10px; }
   .bb-footerbar-x{ color:#fff; opacity:.55; font-size:12px; }
   .bb-footerbar-text{ color:#fff; opacity:.85; font-size:11.5px; }
+
+  /* ---- índice navegable ---- */
+  html{ scroll-behavior:smooth; }
+  .bb-nav{ position:sticky; top:0; z-index:100; background:rgba(246,244,251,.93); backdrop-filter:blur(8px); border-bottom:1px solid var(--bb-line); }
+  .bb-nav-inner{ max-width:920px; margin:0 auto; padding:9px 20px; display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap; }
+  .bb-nav-brand{ font-size:12px; font-weight:700; color:var(--bb-toku); }
+  .bb-nav-links{ display:flex; gap:5px; flex-wrap:wrap; }
+  .bb-nav-links a{ font-size:12px; font-weight:600; color:var(--bb-muted); text-decoration:none; padding:5px 11px; border-radius:999px; transition:background-color .15s,color .15s; }
+  .bb-nav-links a:hover{ background:var(--bb-toku-soft); color:var(--bb-toku); }
+  .bb-section{ scroll-margin-top:60px; }
+  .gantt-root{ scroll-margin-top:60px; }
+
+  /* ---- estado actual vs propuesto ---- */
+  .bb-state{ display:grid; grid-template-columns:1fr auto 1fr; gap:14px; align-items:stretch; margin-top:14px; }
+  @media (max-width:640px){ .bb-state{ grid-template-columns:1fr; } .bb-state-arrow{ transform:rotate(90deg); justify-self:center; } }
+  .bb-state-col{ border:1px solid var(--bb-line); border-radius:12px; padding:14px 16px; background:var(--bb-paper); }
+  .bb-state-col.next{ border-color:var(--bb-toku); box-shadow:0 0 0 1px var(--bb-toku) inset; }
+  .bb-state-tag{ font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.05em; color:var(--bb-muted); margin-bottom:8px; }
+  .bb-state-col.next .bb-state-tag{ color:var(--bb-toku); }
+  .bb-state-col ul{ margin:0; padding-left:16px; font-size:12.5px; line-height:1.65; color:var(--bb-ink); }
+  .bb-state-col ul b{ font-weight:700; }
+  .bb-state-arrow{ align-self:center; color:var(--bb-toku); font-size:22px; font-weight:700; }
+
+  /* ---- subtítulos y tablas de ruteo ---- */
+  .bb-subhead{ font-size:13.5px; font-weight:700; margin:20px 0 8px; }
+  .route-wrap{ overflow-x:auto; border:1px solid var(--bb-line); border-radius:12px; background:var(--bb-paper); }
+  table.route-table{ width:100%; border-collapse:separate; border-spacing:0; font-size:12.5px; min-width:460px; }
+  table.route-table th, table.route-table td{ text-align:left; padding:9px 14px; border-bottom:1px solid var(--bb-line); }
+  table.route-table thead th{ font-size:10.5px; text-transform:uppercase; letter-spacing:.04em; color:var(--bb-muted); font-weight:700; }
+  table.route-table tbody tr:last-child td{ border-bottom:none; }
+  table.route-table td.num{ font-variant-numeric:tabular-nums; white-space:nowrap; }
+  .medio{ display:inline-block; font-size:11px; font-weight:700; padding:3px 10px; border-radius:999px; white-space:nowrap; }
+  .medio.transfer{ background:var(--bb-good-soft); color:var(--bb-good); }
+  .medio.boton{ background:var(--bb-toku-soft); color:var(--bb-toku); }
+  .medio.servipag{ background:var(--bb-banco-soft); color:var(--bb-banco); }
+
+  /* ---- alternativas de integración ---- */
+  .alt-grid{ display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:14px; }
+  @media (max-width:640px){ .alt-grid{ grid-template-columns:1fr; } }
+  .alt-card{ border:1px solid var(--bb-line); border-radius:14px; padding:16px 18px; background:var(--bb-paper); display:flex; flex-direction:column; gap:9px; }
+  .alt-card.reco{ border-color:var(--bb-good); box-shadow:0 0 0 1px var(--bb-good) inset; }
+  .alt-head{ display:flex; align-items:baseline; justify-content:space-between; gap:8px; }
+  .alt-num{ font-size:10.5px; font-weight:700; color:var(--bb-muted); text-transform:uppercase; letter-spacing:.05em; }
+  .alt-reco-badge{ font-size:10.5px; font-weight:700; background:var(--bb-good-soft); color:var(--bb-good); padding:3px 10px; border-radius:999px; }
+  .alt-title{ font-size:15px; font-weight:700; }
+  .alt-body{ font-size:12.5px; line-height:1.55; color:var(--bb-muted); }
+  .alt-tags{ display:flex; flex-wrap:wrap; gap:6px; margin-top:auto; padding-top:4px; }
+  .alt-tag{ font-size:10.5px; font-weight:600; padding:3px 9px; border-radius:999px; background:var(--bb-page-bg); color:var(--bb-muted); border:1px solid var(--bb-line); }
+
+  /* ---- tabla de slugs ---- */
+  .slug-wrap{ overflow-x:auto; border:1px solid var(--bb-line); border-radius:12px; background:var(--bb-paper); margin-top:6px; }
+  table.slug-table{ width:100%; border-collapse:separate; border-spacing:0; font-size:12.5px; min-width:360px; }
+  table.slug-table th, table.slug-table td{ text-align:left; padding:7px 14px; border-bottom:1px solid var(--bb-line); }
+  table.slug-table thead th{ font-size:10.5px; text-transform:uppercase; letter-spacing:.04em; color:var(--bb-muted); font-weight:700; }
+  table.slug-table tbody tr:last-child td{ border-bottom:none; }
+  .bb-codeblock{ font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; background:#1C1730; color:#EDE9F7; border-radius:10px; padding:12px 15px; font-size:12px; line-height:1.6; overflow-x:auto; white-space:pre; margin-top:6px; }
 </style>
+
+<nav class="bb-nav">
+  <div class="bb-nav-inner">
+    <span class="bb-nav-brand">Toku &times; CAT &middot; Botones bancarios</span>
+    <div class="bb-nav-links">
+      <a href="#definiciones">Definiciones</a>
+      <a href="#estructura">Estructura y flujo</a>
+      <a href="#tecnica">Documentación técnica</a>
+      <a href="#gantt">Carta Gantt</a>
+    </div>
+  </div>
+</nav>
 
 <div class="bb-root">
   <div class="bb-brandbar">
@@ -108,145 +176,212 @@
       <span><b>Estado:</b> Propuesta lista, pendiente validación con CAT</span>
     </div>
     <div class="bb-chips">
-      <span class="bb-chip good">✓ 3 funcionalidades ya soportadas por Toku</span>
-      <span class="bb-chip cat">3 cambios del lado CAT</span>
-      <span class="bb-chip toku">3 ajustes del lado Toku</span>
-      <span class="bb-chip good">⚡ PSP ya disponible: Scotiabank, Santander y Chile</span>
+      <span class="bb-chip good">✓ 9 botones → 100% orquestados por Toku</span>
+      <span class="bb-chip toku">💸 Prioriza transferencia (más barata) sobre botón bancario</span>
+      <span class="bb-chip cat">🛡 Servipag queda solo como respaldo</span>
+      <span class="bb-chip good">🔀 2 alternativas de implementación</span>
     </div>
   </div>
 
-  <div>
-    <div class="bb-section-label">¿Qué es el Botón Bancario?</div>
-    <p class="bb-lede">Un medio de pago que carga directo desde la cuenta corriente del cliente — sin tarjeta. El usuario elige su banco, inicia sesión y confirma con clave/2FA. Soporta montos altos; por eso Toku lo prioriza sobre transferencia solo cuando el monto lo amerita, sin pedirle nunca al usuario elegir entre ambos: la orquestación es 100% interna.</p>
+  <!-- ======================= DEFINICIONES ======================= -->
+  <div class="bb-section" id="definiciones">
+    <div class="bb-section-label">Definiciones</div>
+    <p class="bb-lede">Los conceptos base para entender la propuesta. La idea central: reemplazar los medios de pago actuales por un solo flujo orquestado por Toku, que siempre elige la vía más barata disponible sin que el usuario tenga que decidir.</p>
     <div class="bb-cards" style="margin-top:14px">
       <div class="bb-card">
-        <div class="bb-card-title">Pago cuenta a cuenta</div>
-        <div class="bb-card-body">Sin tarjeta de crédito ni débito — el usuario se autentica directo en su banco.</div>
+        <div class="bb-card-title">Transferencia por Toku</div>
+        <div class="bb-card-body">Pago cuenta a cuenta, la vía <b>más barata</b>. Sujeta al límite por transacción de cada banco y a que el cliente esté "activado" en Toku.</div>
       </div>
       <div class="bb-card">
-        <div class="bb-card-title">Pensado para montos altos</div>
-        <div class="bb-card-body">Es más costoso que una transferencia, por eso Toku lo usa solo sobre cierto monto — la orquestación decide automáticamente.</div>
+        <div class="bb-card-title">Botón bancario</div>
+        <div class="bb-card-body">Pago autenticado dentro del banco. Soporta <b>montos altos</b> y no requiere activación previa, pero es más costoso. Requiere convenio con el banco.</div>
       </div>
       <div class="bb-card">
-        <div class="bb-card-title">Confirmación por webhook</div>
-        <div class="bb-card-body">El banco notifica a Toku cuando el pago se aprueba. Un pago no exitoso queda "abortado", no "failed" — es normal.</div>
+        <div class="bb-card-title">Activación en Toku</div>
+        <div class="bb-card-body">La primera vez que un cliente paga por Toku queda "activado". Montos ≤ $350.000 se transfieren sin activación previa (y esa misma transferencia lo activa); sobre ese monto, un cliente no activado necesitaría una transferencia de activación.</div>
       </div>
       <div class="bb-card">
-        <div class="bb-card-title">Pagos B2B con doble aprobador</div>
-        <div class="bb-card-body">Pueden tardar hasta 8 horas en confirmarse mientras esperan la segunda aprobación — no es un error.</div>
+        <div class="bb-card-title">Servipag</div>
+        <div class="bb-card-body">Medio de <b>respaldo</b>. Se usa solo para clientes aún no activados que pagan montos altos en bancos que no tienen botón bancario.</div>
+      </div>
+      <div class="bb-card">
+        <div class="bb-card-title">PST vs PSP</div>
+        <div class="bb-card-body"><b>PST</b>: convenio propio de CAT con el banco (los 3 botones actuales). <b>PSP</b>: convenio de Toku, útil para sumar bancos donde CAT no tiene convenio (ej. Bice, BCI).</div>
       </div>
     </div>
   </div>
 
-  <div>
-    <div class="bb-section-label">Cómo se implementa del lado de CAT</div>
-    <p class="bb-lede">CAT nunca se conecta directo al banco. Todo su trabajo técnico es consumir 2 endpoints de Toku y mostrar 2 pantallas — el resto (credenciales, firmas, conciliación) lo resuelve Toku.</p>
+  <!-- ======================= ESTRUCTURA Y FLUJO ======================= -->
+  <div class="bb-section" id="estructura">
+    <div class="bb-section-label">Estructura y flujo</div>
+    <p class="bb-lede">Hoy la pantalla "Elige tu medio de pago" tiene un botón genérico de Toku, 3 botones de bancos directos y Servipag (que despliega el resto de los bancos). La propuesta unifica todo bajo Toku.</p>
+
+    <div class="bb-state">
+      <div class="bb-state-col now">
+        <div class="bb-state-tag">Hoy</div>
+        <ul>
+          <li>Botón genérico "Paga con tu banco" (Toku)</li>
+          <li><b>3 botones directos:</b> Scotiabank, Santander, Banco de Chile</li>
+          <li><b>Servipag</b> → despliega ~10 bancos más</li>
+        </ul>
+      </div>
+      <div class="bb-state-arrow">→</div>
+      <div class="bb-state-col next">
+        <div class="bb-state-tag">Propuesto</div>
+        <ul>
+          <li><b>Todo orquestado por Toku</b>, sin botón genérico</li>
+          <li>Los 3 bancos con convenio (PST): botón bancario o transferencia según monto</li>
+          <li>El resto de los bancos: transferencia directa por Toku</li>
+          <li><b>Servipag solo como respaldo</b> para no activados</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="bb-subhead">Cómo fluye un pago</div>
     <div class="bb-flow">
       <div class="bb-flow-step">
         <span class="bb-actor cat">CAT</span>
-        <span class="bb-flow-title">1. Inicia el pago</span>
-        <span class="bb-flow-body">El frontend de CAT llama al endpoint de inicio de Toku cuando el usuario elige pagar.</span>
+        <span class="bb-flow-title">1. Elige banco</span>
+        <span class="bb-flow-body">El usuario elige su banco y CAT redirige a Toku con el query param de ese banco.</span>
       </div>
       <div class="bb-flow-arrow">→</div>
       <div class="bb-flow-step">
         <span class="bb-actor toku">Toku</span>
-        <span class="bb-flow-title">2. Crea la transacción</span>
-        <span class="bb-flow-body">Toku arma la transacción y entrega la URL (o config) del banco elegido.</span>
+        <span class="bb-flow-title">2. Elige la vía</span>
+        <span class="bb-flow-body">Según monto y si el cliente está activado, Toku decide transferencia o botón bancario.</span>
       </div>
       <div class="bb-flow-arrow">→</div>
       <div class="bb-flow-step">
         <span class="bb-actor banco">Banco</span>
         <span class="bb-flow-title">3. El usuario paga</span>
-        <span class="bb-flow-body">CAT redirige al banco; el usuario inicia sesión y confirma con clave/2FA.</span>
-      </div>
-      <div class="bb-flow-arrow">→</div>
-      <div class="bb-flow-step">
-        <span class="bb-actor toku">Toku</span>
-        <span class="bb-flow-title">4. Confirma el pago</span>
-        <span class="bb-flow-body">El banco notifica por webhook a Toku, que valida y actualiza el estado.</span>
+        <span class="bb-flow-body">El cliente confirma en su banco (o transfiere), sin salir del flujo.</span>
       </div>
       <div class="bb-flow-arrow">→</div>
       <div class="bb-flow-step">
         <span class="bb-actor cat">CAT</span>
-        <span class="bb-flow-title">5. Muestra el resultado</span>
-        <span class="bb-flow-body">El usuario vuelve a CAT y ve éxito, rechazo o pendiente.</span>
+        <span class="bb-flow-title">4. Ve el resultado</span>
+        <span class="bb-flow-body">Toku confirma el pago y el usuario vuelve a CAT con éxito, rechazo o pendiente.</span>
       </div>
     </div>
-    <div class="bb-callout"><b>Lo que CAT nunca implementa:</b> integración directa con la API del banco, ni el parsing de archivos de rendición/SFTP — eso es 100% Toku.</div>
-  </div>
 
-  <div>
-    <div class="bb-section-label">¿Con los bancos de Toku o los propios de CAT?</div>
-    <p class="bb-lede">La velocidad de lanzamiento depende de esta decisión — y se puede mezclar banco por banco.</p>
-    <div class="bb-split" style="margin-top:14px">
-      <div class="bb-panel toku">
-        <div class="bb-panel-head">
-          <span class="bb-panel-title">PSP — convenio de Toku con el banco</span>
-          <span class="bb-reco-badge">Para partir rápido</span>
+    <div class="bb-subhead">Ruteo — 3 bancos con convenio (Scotiabank · Santander · Banco de Chile)</div>
+    <div class="route-wrap">
+      <table class="route-table">
+        <thead><tr><th>Cliente</th><th>Monto</th><th>Vía que usa Toku</th></tr></thead>
+        <tbody>
+          <tr><td>Activado</td><td class="num">≤ límite del banco*</td><td><span class="medio transfer">Transferencia</span></td></tr>
+          <tr><td>Activado</td><td class="num">&gt; límite del banco*</td><td><span class="medio boton">Botón bancario</span></td></tr>
+          <tr><td>No activado</td><td class="num">≤ $350.000</td><td><span class="medio transfer">Transferencia</span> <span style="color:var(--bb-muted);font-size:11px">(lo activa)</span></td></tr>
+          <tr><td>No activado</td><td class="num">&gt; $350.000</td><td><span class="medio boton">Botón bancario</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="bb-lede" style="font-size:11.5px;margin-top:6px">*Límite de transferencia por banco: Scotiabank $5.000.000 · Santander y Banco de Chile $3.000.000.</p>
+
+    <div class="bb-subhead">Ruteo — resto de bancos (los que hoy están dentro de Servipag)</div>
+    <div class="route-wrap">
+      <table class="route-table">
+        <thead><tr><th>Cliente</th><th>Monto</th><th>Vía que usa Toku</th></tr></thead>
+        <tbody>
+          <tr><td>Activado</td><td class="num">cualquier monto</td><td><span class="medio transfer">Transferencia</span> <span style="color:var(--bb-muted);font-size:11px">(incluso sobre el límite del banco)</span></td></tr>
+          <tr><td>No activado</td><td class="num">≤ $350.000</td><td><span class="medio transfer">Transferencia</span> <span style="color:var(--bb-muted);font-size:11px">(lo activa)</span></td></tr>
+          <tr><td>No activado</td><td class="num">&gt; $350.000</td><td><span class="medio servipag">Servipag</span> <span style="color:var(--bb-muted);font-size:11px">(respaldo)</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="bb-lede" style="font-size:11.5px;margin-top:6px">Estos bancos no tienen botón bancario, por eso el respaldo para montos altos de clientes aún no activados es Servipag (en vez de botón bancario).</p>
+
+    <div class="bb-callout" style="margin-top:16px"><b>Por qué esto baja costos rápido:</b> se estima que ~60% de los pagos por estos botones son <b>menores a $350.000</b>, así que se activan de inmediato vía transferencia (la vía más barata). El ~40% restante parte por botón bancario o Servipag, y en cuanto hacen un pago ≤ $350.000 quedan activados y bajan de costo desde ahí en adelante.</div>
+
+    <div class="bb-section-label" style="margin-top:28px">Dos alternativas de implementación</div>
+    <div class="alt-grid">
+      <div class="alt-card reco">
+        <div class="alt-head">
+          <span class="alt-num">Alternativa 1</span>
+          <span class="alt-reco-badge">Valor inmediato</span>
         </div>
-        <div class="bb-item">Ya disponible con Scotiabank, Santander y Banco de Chile — se conecta sin gestionar nada con el banco.</div>
-        <div class="bb-item">Para bancos donde CAT no tenga convenio propio (por ejemplo Bice o BCI), PSP permite sumarlos sin depender de esa negociación.</div>
-        <div class="bb-item">CAT no gestiona contratos ni credenciales bancarias.</div>
-      </div>
-      <div class="bb-panel banco">
-        <div class="bb-panel-head">
-          <span class="bb-panel-title">PST — convenio propio de CAT</span>
-          <span class="bb-panel-count">depende del banco</span>
+        <div class="alt-title">Migración por fases</div>
+        <div class="alt-body">Primero migrar solo los <b>3 botones con convenio</b> a la orquestación de Toku. Desde el día 1 empiezan a bajar los costos, porque esos pagos pasan por transferencia cuando el monto lo permite. En una segunda fase se migran los bancos de Servipag y se suma la lógica de activación + respaldo.</div>
+        <div class="alt-tags">
+          <span class="alt-tag">Menor riesgo</span>
+          <span class="alt-tag">Ahorro temprano</span>
+          <span class="alt-tag">Dos entregas</span>
         </div>
-        <div class="bb-item">CAT debe contratar el botón bancario directamente con cada banco (Toku entrega carta tipo y contactos).</div>
-        <div class="bb-item">El tiempo depende del banco — generalmente semanas.</div>
-        <div class="bb-item">Las credenciales quedan asociadas a la cuenta de CAT.</div>
       </div>
-    </div>
-    <p class="bb-lede" style="margin-top:12px">Ambos modelos conviven: se puede partir 100% PSP para lanzar rápido, y migrar banco por banco a PST más adelante si conviene.</p>
-  </div>
-
-  <div>
-    <div class="bb-section-label">La propuesta de flujo</div>
-    <p class="bb-lede">Flujo de pago con botones bancarios en la app de Cencosud Scotiabank: qué mantiene Toku, qué queda soportado sin desarrollo adicional de CAT, y qué queda fuera de este alcance.</p>
-    <div class="bb-cards" style="margin-top:14px">
-      <div class="bb-card">
-        <div class="bb-card-mark good">✓</div>
-        <div class="bb-card-title">Orquestación de pagos — Botones y Transferencias</div>
-        <div class="bb-card-body">Toku mantiene toda la orquestación actual y avanza además con el pago directo desde el botón de cada banco.</div>
-      </div>
-      <div class="bb-card">
-        <div class="bb-card-mark good">✓</div>
-        <div class="bb-card-title">Feedback ante caídas</div>
-        <div class="bb-card-body">Toku muestra una vista de "banco no disponible" ante caídas, sin requerir desarrollo del lado de CAT.</div>
-      </div>
-      <div class="bb-card">
-        <div class="bb-card-mark good">✓</div>
-        <div class="bb-card-title">Feedback de bancos sin límite de monto máximo</div>
-        <div class="bb-card-body">Toku soporta el manejo de activaciones y monto máximo mostrando el modal de activación correspondiente.</div>
-      </div>
-      <div class="bb-card out">
-        <div class="bb-card-mark out">✕</div>
-        <div class="bb-card-title">Orden dinámico de bancos</div>
-        <div class="bb-card-body">Toku lo está desarrollando en base al historial de pago del cliente, pero como los bancos quedan del lado de CAT, esto queda fuera de este alcance por ahora.</div>
+      <div class="alt-card">
+        <div class="alt-head">
+          <span class="alt-num">Alternativa 2</span>
+        </div>
+        <div class="alt-title">Migración completa de una</div>
+        <div class="alt-body">Migrar los <b>9 botones</b> orquestados por Toku de una sola vez, con la lógica de respaldo de Servipag ya incluida (para clientes no activados y cualquier caso borde). Experiencia unificada y máximo ahorro desde el lanzamiento, a cambio de un mayor alcance técnico inicial.</div>
+        <div class="alt-tags">
+          <span class="alt-tag">Una sola entrega</span>
+          <span class="alt-tag">Experiencia unificada</span>
+          <span class="alt-tag">Mayor alcance inicial</span>
+        </div>
       </div>
     </div>
   </div>
 
-  <div>
-    <div class="bb-section-label">Cambios requeridos para implementarlo</div>
-    <div class="bb-split" style="margin-top:14px">
+  <!-- ======================= DOCUMENTACIÓN TÉCNICA ======================= -->
+  <div class="bb-section" id="tecnica">
+    <div class="bb-section-label">Documentación técnica</div>
+    <p class="bb-lede">Dos piezas concretas del lado de CAT: (1) redirigir a Toku con el query param del banco, y (2) guardar si el cliente ya está activado en Toku para rutear los bancos secundarios. Toku resuelve el resto (credenciales, botón bancario, conciliación).</p>
+
+    <div class="bb-subhead">1. Redirección con query param del banco</div>
+    <p class="bb-lede">Cada botón redirige a Toku agregando el identificador del banco en la URL. Toku recibe ese parámetro y direcciona el flujo al banco correcto.</p>
+    <div class="bb-codeblock">https://checkout.trytoku.com/&lt;checkout&gt;/cl_banco_de_chile
+                                        └── query param del banco</div>
+    <div class="slug-wrap">
+      <table class="slug-table">
+        <thead><tr><th>Banco</th><th>Identificador (slug)</th></tr></thead>
+        <tbody>
+          <tr><td>Banco de Chile</td><td><span class="bb-code">cl_banco_de_chile</span></td></tr>
+          <tr><td>Scotiabank</td><td><span class="bb-code">cl_scotiabank</span></td></tr>
+          <tr><td>Santander</td><td><span class="bb-code">cl_santander</span></td></tr>
+          <tr><td>BancoEstado</td><td><span class="bb-code">cl_banco_estado</span></td></tr>
+          <tr><td>Bice</td><td><span class="bb-code">cl_bice</span></td></tr>
+          <tr><td>Itaú</td><td><span class="bb-code">cl_itau</span></td></tr>
+          <tr><td>…y así con cada banco</td><td><span class="bb-code">cl_&lt;banco&gt;</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="bb-subhead">2. Identificar clientes activados en Toku (cambio en el backend de CAT)</div>
+    <p class="bb-lede">CAT debe poder saber si un cliente ya está activado en Toku (es decir, si ya pagó por Toku al menos una vez). Con ese dato + el monto, CAT decide para los bancos secundarios si el pago va por transferencia o por Servipag.</p>
+    <div class="bb-cards" style="margin-top:6px">
+      <div class="bb-card">
+        <div class="bb-card-title">Almacenar el estado del cliente</div>
+        <div class="bb-card-body">Agregar en la cuenta del cliente un campo "activado en Toku" (metadata si ya existe, o una columna nueva). Es el único cambio de datos que necesita CAT.</div>
+      </div>
+      <div class="bb-card">
+        <div class="bb-card-title">Toku entrega y mantiene la base</div>
+        <div class="bb-card-body">Toku comparte la base inicial de clientes ya activados y notifica las nuevas activaciones, para que CAT mantenga el flag al día.</div>
+      </div>
+      <div class="bb-card">
+        <div class="bb-card-title">Decisión en el frontend de CAT</div>
+        <div class="bb-card-body">Bancos secundarios: si el cliente está activado (o el monto ≤ $350.000) → redirige a Toku (transferencia); si no → Servipag. Los 3 con convenio siempre redirigen a Toku (Toku rutea internamente).</div>
+      </div>
+    </div>
+
+    <div class="bb-subhead">Cambios requeridos</div>
+    <div class="bb-split">
       <div class="bb-panel cat">
         <div class="bb-panel-head">
           <span class="bb-panel-title">Del lado de CAT</span>
           <span class="bb-panel-count">3 cambios</span>
         </div>
         <div class="bb-item">
-          <span class="bb-item-title">Actualizar el frontend</span>
-          Sumar la selección de banco y la llamada al flujo de botones bancarios en el checkout de CAT.
+          <span class="bb-item-title">Reemplazar los botones por el flujo Toku</span>
+          El genérico, los 3 con convenio y los ~6 de Servipag pasan a redirigir a Toku.
         </div>
         <div class="bb-item">
-          <span class="bb-item-title">Agregar query param con el banco</span>
-          Sumar a la URL un query param con el identificador del banco, por ejemplo <span class="bb-code">/cl_banco_de_chile</span>, para que el flujo direccione correctamente.
+          <span class="bb-item-title">Agregar el query param del banco</span>
+          Sumar a la URL el identificador del banco, ej. <span class="bb-code">/cl_banco_de_chile</span>.
         </div>
         <div class="bb-item">
-          <span class="bb-item-title">Manejar clientes no activados</span>
-          Guardar si el cliente ya está activado en Toku (metadata o una columna nueva) y mostrar Servipag en vez de pedir la transferencia de activación cuando el monto lo amerita.
+          <span class="bb-item-title">Identificar clientes activados</span>
+          Guardar el flag "activado en Toku" (columna/metadata) y usar flag + monto para rutear los bancos secundarios entre transferencia y Servipag.
         </div>
       </div>
       <div class="bb-panel toku">
@@ -255,22 +390,22 @@
           <span class="bb-panel-count">3 ajustes</span>
         </div>
         <div class="bb-item">
-          <span class="bb-item-title">Vista de banco no disponible</span>
-          Hoy, si llega el query param de un banco no disponible, el flujo se cae. Hay que redirigir a la vista de "banco no disponible" ya diseñada.
-        </div>
-        <div class="bb-item">
-          <span class="bb-item-title">Pulir el flujo de activación y redirección</span>
-          Afinar la experiencia de principio a fin para que el paso por el banco y la vuelta a CAT sea fluido.
+          <span class="bb-item-title">Ruteo por query param + activación</span>
+          Recibir el banco, evaluar monto y activación, y elegir botón bancario o transferencia.
         </div>
         <div class="bb-item">
           <span class="bb-item-title">Compartir la base de clientes activados</span>
-          Entregar a CAT el listado de clientes ya activados en Toku para que puedan mostrarles directamente los botones de Toku.
+          Entregar el listado inicial y notificar cada nueva activación a CAT.
+        </div>
+        <div class="bb-item">
+          <span class="bb-item-title">Vista de banco no disponible y pulido</span>
+          Redirigir a la vista diseñada ante un banco caído y afinar el flujo de principio a fin.
         </div>
       </div>
     </div>
   </div>
 
-  <div class="bb-transition"><span>↓ Plan de implementación ↓</span></div>
+  <div class="bb-transition"><span>↓ Carta Gantt ↓</span></div>
 </div>
 
 <style>
@@ -412,7 +547,7 @@
   .ap-empty{ color:var(--muted); font-style:italic; padding:4px 4px 8px; }
 </style>
 
-<div class="gantt-root">
+<div class="gantt-root" id="gantt">
   <div class="gantt-title" id="gantt-title"></div>
   <div class="gantt-meta" id="gantt-meta"></div>
   <div class="gantt-toolbar">
@@ -444,51 +579,54 @@
   </div>
   <span class="bb-footerbar-text">Botones bancarios — plan conjunto Toku &times; Cencosud Scotiabank (CAT)</span>
 </div>
-<div class="bb-note">Este plan cubre solo la iniciativa de botones bancarios — el cliente ya está en producción con Toku, no es un onboarding completo.</div>
+<div class="bb-note">Este plan sigue la Alternativa 1 (migración por fases). Cubre solo la iniciativa de botones bancarios — CAT ya está en producción con Toku.</div>
 
 <script>
 // ── DATA — Botones Bancarios · Cencosud Scotiabank (CAT) ────────────────────
 const META = {
   client: 'Cencosud Scotiabank (CAT) — Botones Bancarios',
   startDate: '2026-07-15', // YYYY-MM-DD
-  tipo: 'Feature — Botones Bancarios',
-  productos: ['Botones bancarios', 'Transferencias'],
+  tipo: 'Feature — Orquestación de botones bancarios',
+  productos: ['Botones bancarios', 'Transferencias', 'Servipag (respaldo)'],
   integracion: ['Redirección con query param por banco'],
-  portal: 'Redirección al checkout (widget del banco)',
-  numSemanas: 5,
-  goLiveWeek: 4,
+  portal: 'Redirección al checkout de Toku',
+  numSemanas: 6,
+  goLiveWeek: 5,
 };
 
 const PHASES = [
   { key:'f1', name:'Fase 1 — Alineación & Diseño', header:'#3C1053', bg:'#F0EBFF', tasks:[
     {n:1, t:'Preparar documento y demo de la propuesta de flujo', r:'PM Toku', e:'Done', s1:1, s2:1},
     {n:2, t:'Presentar propuesta a CAT y validar alcance', r:'PM Toku + CAT', e:'Pendiente', s1:1, s2:1},
-    {n:3, t:'Confirmar diseño UX de la vista "banco no disponible"', r:'Diseño Toku + CAT', e:'Pendiente', s1:1, s2:1},
-    {n:4, t:'Confirmar experiencia de activación de bancos', r:'PM Toku + CAT', e:'Pendiente', s1:1, s2:1},
-    {n:5, t:'Definir formato del query param por banco (ej. /cl_banco_de_chile)', r:'SA Toku + CAT', e:'Pendiente', s1:1, s2:1},
-    {n:6, t:'Decidir modelo por banco: PSP (convenio Toku) o PST (convenio propio CAT)', r:'PM Toku + CAT', e:'Pendiente', s1:1, s2:1, note:'Recomendado: partir PSP para lanzar en días; evaluar PST más adelante banco por banco'},
+    {n:3, t:'Elegir alternativa de implementación (por fases vs completa)', r:'PM Toku + CAT', e:'Pendiente', s1:1, s2:1, note:'Recomendado: partir por fases para bajar costos desde el día 1'},
+    {n:4, t:'Definir los identificadores (slug) de query param por banco', r:'SA Toku + CAT', e:'Pendiente', s1:1, s2:2},
+    {n:5, t:'Definir modelo de cliente activado (cómo Toku comparte y notifica)', r:'SA Toku + CAT', e:'Pendiente', s1:1, s2:2},
+    {n:6, t:'Confirmar UX de la vista de banco no disponible', r:'Diseño Toku + CAT', e:'Pendiente', s1:1, s2:2},
   ]},
   { key:'f2', name:'Fase 2 — Desarrollo Toku', header:'#00695C', bg:'#E8F5F3', tasks:[
-    {n:7, t:'Fix: redirigir a vista de "banco no disponible" ante query param inválido', r:'Dev Toku', e:'Pendiente', s1:1, s2:2},
-    {n:8, t:'Pulir el flujo de activación y redirección', r:'Dev Toku', e:'Pendiente', s1:1, s2:2},
-    {n:9, t:'Compartir con CAT la base de clientes ya activados', r:'Dev Toku', e:'Pendiente', s1:1, s2:2, note:'Permite que CAT muestre directamente los botones de Toku a esos clientes'},
+    {n:7, t:'Ruteo por query param: botón bancario o transferencia según monto y activación', r:'Dev Toku', e:'Pendiente', s1:2, s2:4},
+    {n:8, t:'Exponer base de clientes activados y notificar nuevas activaciones a CAT', r:'Dev Toku', e:'Pendiente', s1:2, s2:4},
+    {n:9, t:'Vista de banco no disponible ante query param inválido', r:'Dev Toku', e:'Pendiente', s1:2, s2:3},
+    {n:10, t:'Pulir el flujo de activación y redirección de punta a punta', r:'Dev Toku', e:'Pendiente', s1:3, s2:4},
   ]},
   { key:'f3', name:'Fase 3 — Desarrollo CAT', header:'#072642', bg:'#E7ECF2', tasks:[
-    {n:10, t:'Actualizar el frontend', r:'Dev CAT', e:'Pendiente', s1:1, s2:2, note:'Sumar la selección de banco y la llamada al flujo de botones bancarios en el checkout de CAT'},
-    {n:11, t:'Agregar query param con el banco', r:'Dev CAT', e:'Pendiente', s1:1, s2:1, note:'Sumar a la URL un query param con el identificador del banco, ej. /cl_banco_de_chile'},
-    {n:12, t:'Manejar clientes no activados', r:'Dev CAT', e:'Pendiente', s1:1, s2:2, note:'Guardar si el cliente ya está activado en Toku (metadata o columna nueva) y mostrar Servipag en vez de la transferencia de activación'},
+    {n:11, t:'Reemplazar los 9 botones y el genérico por el flujo Toku (frontend)', r:'Dev CAT', e:'Pendiente', s1:2, s2:4, note:'En Alternativa 1 parte solo con los 3 bancos con convenio'},
+    {n:12, t:'Redirigir a Toku con el query param del banco', r:'Dev CAT', e:'Pendiente', s1:2, s2:3},
+    {n:13, t:'Almacenar el flag "activado en Toku" por cliente (columna/metadata)', r:'Dev CAT', e:'Pendiente', s1:2, s2:4},
+    {n:14, t:'Lógica bancos secundarios: transferencia (activado) vs Servipag (no activado)', r:'Dev CAT', e:'Pendiente', s1:3, s2:4},
   ]},
   { key:'f4', name:'Fase 4 — Pruebas Integradas', header:'#BF5A00', bg:'#FFF4E6', tasks:[
-    {n:13, t:'Plan de pruebas E2E por banco', r:'QA Toku + CAT', e:'Pendiente', s1:3, s2:3},
-    {n:14, t:'Prueba: feedback de banco no disponible (simular caída)', r:'QA Toku + Dev CAT', e:'Pendiente', s1:3, s2:3},
-    {n:15, t:'Prueba: modal de activación con monto máximo', r:'QA Toku', e:'Pendiente', s1:3, s2:3},
-    {n:16, t:'Corrección de bugs post-pruebas', r:'Dev Toku + Dev CAT', e:'Pendiente', s1:3, s2:4},
+    {n:15, t:'Plan de pruebas E2E por banco y por tramo de monto', r:'QA Toku + CAT', e:'Pendiente', s1:4, s2:4},
+    {n:16, t:'Prueba: cliente activado vs no activado (cortes en $350.000 y límite del banco)', r:'QA Toku', e:'Pendiente', s1:4, s2:5},
+    {n:17, t:'Prueba: respaldo Servipag para clientes no activados', r:'QA Toku + Dev CAT', e:'Pendiente', s1:4, s2:5},
+    {n:18, t:'Prueba: banco no disponible', r:'QA Toku', e:'Pendiente', s1:4, s2:5},
+    {n:19, t:'Corrección de bugs post-pruebas', r:'Dev Toku + Dev CAT', e:'Pendiente', s1:5, s2:5},
   ]},
   { key:'f5', name:'Fase 5 — Demo & Go Live', header:'#2E7D32', bg:'#EBF5EB', tasks:[
-    {n:17, t:'Demo final a CAT — validación de flujo completo', r:'PM Toku + CAT', e:'Pendiente', s1:4, s2:4},
-    {n:18, t:'Sign-off de CAT para paso a producción', r:'PM Toku + CAT', e:'Pendiente', s1:4, s2:4},
-    {n:19, t:'Go Live — activación de botones bancarios en producción', r:'PM Toku + Dev Toku', e:'Pendiente', s1:4, s2:4},
-    {n:20, t:'Monitoreo post Go Live', r:'SA Toku', e:'Pendiente', s1:4, s2:5},
+    {n:20, t:'Demo final a CAT — validación de flujo completo', r:'PM Toku + CAT', e:'Pendiente', s1:5, s2:5},
+    {n:21, t:'Sign-off de CAT para paso a producción', r:'PM Toku + CAT', e:'Pendiente', s1:5, s2:5},
+    {n:22, t:'Go Live — activación del flujo Toku en producción', r:'PM Toku + Dev Toku', e:'Pendiente', s1:5, s2:5},
+    {n:23, t:'Monitoreo post Go Live', r:'SA Toku', e:'Pendiente', s1:5, s2:6},
   ]},
 ];
 // ── fin de la sección DATA — todo lo de abajo es genérico ───────────────────
