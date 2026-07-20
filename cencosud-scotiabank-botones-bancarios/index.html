@@ -315,8 +315,12 @@
   table.gantt-table th, table.gantt-table td{ padding:6px 9px; border-bottom:1px solid var(--line); white-space:nowrap; }
   .sticky-col{ position:sticky; background:var(--paper); z-index:2; box-shadow:1px 0 0 var(--line); }
   th.sticky-col{ z-index:4; }
+  .sticky-col-right{ position:sticky; right:0; background:var(--paper); z-index:2; box-shadow:-1px 0 0 var(--line); }
+  th.sticky-col-right{ z-index:4; }
   .gantt-table thead th{ position:sticky; top:0; background:var(--hdr-bg); color:#fff; font-weight:600; font-size:11px; letter-spacing:.03em; text-transform:uppercase; z-index:3; text-align:center; }
   .gantt-table thead th.sticky-col{ z-index:5; }
+  .gantt-table thead th.sticky-col-right{ z-index:5; }
+  .col-actions{ width:38px; text-align:center; }
   .col-num{ left:0; width:32px; text-align:center; color:var(--muted); }
   .row-drag-handle{ display:none; cursor:grab; }
   tr.task-row:hover .row-num{ display:none; }
@@ -333,15 +337,14 @@
   .week-cell.filled{ cursor:grab; }
   .week-cell.edge{ cursor:ew-resize; }
   tr.phase-row td{ font-weight:700; color:#fff; padding:6px 9px; letter-spacing:.01em; }
-  tr.phase-row td.col-num, tr.phase-row td.col-task, tr.phase-row td.col-resp, tr.phase-row td.col-status{ background:inherit; }
+  tr.phase-row td.col-num, tr.phase-row td.col-task, tr.phase-row td.col-resp, tr.phase-row td.col-status, tr.phase-row td.col-actions{ background:inherit; }
   .phase-name{ border-radius:4px; padding:1px 3px; margin:-1px -3px; }
   .phase-name:hover{ background:rgba(255,255,255,.18); }
   .phase-name:focus{ outline:2px solid rgba(255,255,255,.7); outline-offset:0; background:rgba(255,255,255,.12); }
   .phase-del{
-    position:absolute; right:6px; top:50%; transform:translateY(-50%); width:20px; height:20px; border-radius:5px;
-    border:none; background:rgba(255,255,255,.16); color:#fff; font-size:13px; line-height:20px; cursor:pointer; opacity:.55;
+    width:24px; height:24px; border-radius:5px; border:none;
+    background:rgba(255,255,255,.14); color:#fff; font-size:15px; line-height:24px; cursor:pointer;
   }
-  tr.phase-row:hover .phase-del{ opacity:1; }
   .phase-del:hover{ background:rgba(255,255,255,.32); }
   tr.task-row:hover td:not(.week-cell){ background:#F7F6FC; }
   tr.task-row.dim{ opacity:.28; }
@@ -363,10 +366,9 @@
   .task-note{ font-size:10.5px; color:var(--muted); display:block; font-weight:400; margin-top:2px; min-height:13px; }
   .task-note:empty:before{ content:'+ agregar nota'; color:#b7b2c9; font-style:italic; }
   .task-del{
-    position:absolute; right:4px; top:4px; width:18px; height:18px; border-radius:5px; border:none;
-    background:transparent; color:var(--muted); font-size:13px; line-height:18px; cursor:pointer; opacity:.55;
+    width:22px; height:22px; border-radius:5px; border:none;
+    background:transparent; color:var(--muted); font-size:14px; line-height:22px; cursor:pointer;
   }
-  tr.task-row:hover .task-del{ opacity:1; }
   .task-del:hover{ background:var(--late-bg); color:var(--late-ink); }
   .note-del{
     position:absolute; right:4px; bottom:2px; width:16px; height:16px; border-radius:5px; border:none;
@@ -471,9 +473,9 @@ const PHASES = [
     {n:9, t:'Compartir con CAT la base de clientes ya activados', r:'Dev Toku', e:'Pendiente', s1:1, s2:2, note:'Permite que CAT muestre directamente los botones de Toku a esos clientes'},
   ]},
   { key:'f3', name:'Fase 3 — Desarrollo CAT', header:'#072642', bg:'#E7ECF2', tasks:[
-    {n:10, t:'Actualizar el frontend/checkout para exponer el flujo de botones bancarios', r:'Dev CAT', e:'Pendiente', s1:1, s2:2},
-    {n:11, t:'Agregar query param con el banco a la URL (ej. "/cl_banco_de_chile")', r:'Dev CAT', e:'Pendiente', s1:1, s2:1},
-    {n:12, t:'Manejar clientes no activados: mostrar Servipag sobre cierto monto', r:'Dev CAT', e:'Pendiente', s1:1, s2:2, note:'Guardar el estado "activado en Toku" en la cuenta del cliente (metadata o columna nueva)'},
+    {n:10, t:'Actualizar el frontend', r:'Dev CAT', e:'Pendiente', s1:1, s2:2, note:'Sumar la selección de banco y la llamada al flujo de botones bancarios en el checkout de CAT'},
+    {n:11, t:'Agregar query param con el banco', r:'Dev CAT', e:'Pendiente', s1:1, s2:1, note:'Sumar a la URL un query param con el identificador del banco, ej. /cl_banco_de_chile'},
+    {n:12, t:'Manejar clientes no activados', r:'Dev CAT', e:'Pendiente', s1:1, s2:2, note:'Guardar si el cliente ya está activado en Toku (metadata o columna nueva) y mostrar Servipag en vez de la transferencia de activación'},
   ]},
   { key:'f4', name:'Fase 4 — Pruebas Integradas', header:'#BF5A00', bg:'#FFF4E6', tasks:[
     {n:13, t:'Plan de pruebas E2E por banco', r:'QA Toku + CAT', e:'Pendiente', s1:3, s2:3},
@@ -660,6 +662,7 @@ function render(){
     + '<th class="sticky-col col-task">Tarea</th>'
     + '<th class="sticky-col col-resp">Responsable</th>'
     + '<th class="sticky-col col-status">Estado</th>'
+    + '<th class="sticky-col-right col-actions"></th>'
     + weeks.map((d,i) => `<th class="week-col">S${i+1}<br>${fmtDate(d)}</th>`).join('')
     + '</tr></thead>';
 
@@ -670,7 +673,9 @@ function render(){
       + `<td class="sticky-col col-num" style="background:${phase.header}"></td>`
       + `<td class="sticky-col col-task" style="background:${phase.header}" colspan="3">▸ `
       + `<span class="phase-name" contenteditable="true" data-field="name">${esc(phase.name)}</span>`
-      + `<button class="phase-del" type="button" data-phase-key="${esc(phase.key)}" title="Eliminar fase">🗑</button>`
+      + `</td>`
+      + `<td class="sticky-col-right col-actions" style="background:${phase.header}">`
+      + `<button class="phase-del" type="button" data-phase-key="${esc(phase.key)}" title="Eliminar fase">×</button>`
       + `</td>`
       + Array.from({length: state.meta.numSemanas}).map(() => `<td style="background:${phase.header}"></td>`).join('')
       + '</tr>';
@@ -681,8 +686,7 @@ function render(){
         + `<td class="sticky-col col-task">`
         + `<span class="task-text" contenteditable="true" data-field="t">${esc(task.t)}</span>`
         + `<span class="task-note" contenteditable="true" data-field="note">${esc(task.note || '')}</span>`
-        + (task.note ? `<button class="note-del" type="button" title="Eliminar comentario">🗑</button>` : '')
-        + `<button class="task-del" type="button" title="Eliminar tarea">🗑</button>`
+        + (task.note ? `<button class="note-del" type="button" title="Eliminar comentario">×</button>` : '')
         + `</td>`
         + `<td class="sticky-col col-resp"><div class="assignee-cell" data-task-id="${task.n}">`
         + assigneeChipsHTML(task)
@@ -692,6 +696,9 @@ function render(){
         + `<select class="status-select status-${statusClass}">`
         + STATUSES.map(s => `<option value="${s}" ${s===task.e?'selected':''}>${s}</option>`).join('')
         + `</select></td>`
+        + `<td class="sticky-col-right col-actions">`
+        + `<button class="task-del" type="button" title="Eliminar tarea">×</button>`
+        + `</td>`
         + Array.from({length: state.meta.numSemanas}, (_, i) => {
             const wk = i + 1;
             const filled = wk >= task.s1 && wk <= task.s2;
@@ -702,11 +709,13 @@ function render(){
     });
     tbody += `<tr class="add-row" data-phase-key="${esc(phase.key)}"><td class="sticky-col col-num"></td>`
       + `<td class="sticky-col col-task" colspan="3"><button class="add-task-btn" type="button" data-phase="${esc(phase.key)}">+ Agregar tarea</button></td>`
+      + `<td class="sticky-col-right col-actions"></td>`
       + Array.from({length: state.meta.numSemanas}).map(() => '<td></td>').join('')
       + '</tr>';
   });
   tbody += `<tr class="add-phase-row"><td class="sticky-col col-num"></td>`
     + `<td class="sticky-col col-task" colspan="3"><button class="add-phase-btn" type="button">+ Agregar fase</button></td>`
+    + `<td class="sticky-col-right col-actions"></td>`
     + Array.from({length: state.meta.numSemanas}).map(() => '<td></td>').join('')
     + '</tr>';
   tbody += '</tbody>';
