@@ -109,8 +109,8 @@
     </div>
     <div class="bb-chips">
       <span class="bb-chip good">✓ 3 funcionalidades ya soportadas por Toku</span>
-      <span class="bb-chip cat">2 cambios del lado CAT</span>
-      <span class="bb-chip toku">2 ajustes del lado Toku</span>
+      <span class="bb-chip cat">3 cambios del lado CAT</span>
+      <span class="bb-chip toku">3 ajustes del lado Toku</span>
       <span class="bb-chip good">⚡ PSP ya disponible: Scotiabank, Santander y Chile</span>
     </div>
   </div>
@@ -234,7 +234,7 @@
       <div class="bb-panel cat">
         <div class="bb-panel-head">
           <span class="bb-panel-title">Del lado de CAT</span>
-          <span class="bb-panel-count">2 cambios</span>
+          <span class="bb-panel-count">3 cambios</span>
         </div>
         <div class="bb-item">
           <span class="bb-item-title">Actualizar el frontend</span>
@@ -244,11 +244,15 @@
           <span class="bb-item-title">Agregar query param con el banco</span>
           Sumar a la URL un query param con el identificador del banco, por ejemplo <span class="bb-code">/cl_banco_de_chile</span>, para que el flujo direccione correctamente.
         </div>
+        <div class="bb-item">
+          <span class="bb-item-title">Manejar clientes no activados</span>
+          Guardar si el cliente ya está activado en Toku (metadata o una columna nueva) y mostrar Servipag en vez de pedir la transferencia de activación cuando el monto lo amerita.
+        </div>
       </div>
       <div class="bb-panel toku">
         <div class="bb-panel-head">
           <span class="bb-panel-title">Del lado de Toku</span>
-          <span class="bb-panel-count">2 ajustes</span>
+          <span class="bb-panel-count">3 ajustes</span>
         </div>
         <div class="bb-item">
           <span class="bb-item-title">Vista de banco no disponible</span>
@@ -257,6 +261,10 @@
         <div class="bb-item">
           <span class="bb-item-title">Pulir el flujo de activación y redirección</span>
           Afinar la experiencia de principio a fin para que el paso por el banco y la vuelta a CAT sea fluido.
+        </div>
+        <div class="bb-item">
+          <span class="bb-item-title">Compartir la base de clientes activados</span>
+          Entregar a CAT el listado de clientes ya activados en Toku para que puedan mostrarles directamente los botones de Toku.
         </div>
       </div>
     </div>
@@ -310,6 +318,13 @@
   .gantt-table thead th{ position:sticky; top:0; background:var(--hdr-bg); color:#fff; font-weight:600; font-size:11px; letter-spacing:.03em; text-transform:uppercase; z-index:3; text-align:center; }
   .gantt-table thead th.sticky-col{ z-index:5; }
   .col-num{ left:0; width:32px; text-align:center; color:var(--muted); }
+  .row-drag-handle{ display:none; cursor:grab; }
+  tr.task-row:hover .row-num{ display:none; }
+  tr.task-row:hover .row-drag-handle{ display:inline; }
+  .row-drag-handle:active{ cursor:grabbing; }
+  tr.task-row.dragging{ opacity:.35; }
+  tr.task-row.drop-indicator td{ box-shadow:inset 0 2px 0 0 var(--accent); }
+  tr.add-row.drop-indicator td{ box-shadow:inset 0 2px 0 0 var(--accent); }
   .col-task{ left:32px; width:280px; white-space:normal; position:relative; }
   .col-resp{ left:312px; width:190px; white-space:normal; }
   .col-status{ left:502px; width:118px; text-align:center; }
@@ -324,7 +339,7 @@
   .phase-name:focus{ outline:2px solid rgba(255,255,255,.7); outline-offset:0; background:rgba(255,255,255,.12); }
   .phase-del{
     position:absolute; right:6px; top:50%; transform:translateY(-50%); width:20px; height:20px; border-radius:5px;
-    border:none; background:rgba(255,255,255,.16); color:#fff; font-size:13px; line-height:20px; cursor:pointer; opacity:0;
+    border:none; background:rgba(255,255,255,.16); color:#fff; font-size:13px; line-height:20px; cursor:pointer; opacity:.55;
   }
   tr.phase-row:hover .phase-del{ opacity:1; }
   .phase-del:hover{ background:rgba(255,255,255,.32); }
@@ -349,13 +364,13 @@
   .task-note:empty:before{ content:'+ agregar nota'; color:#b7b2c9; font-style:italic; }
   .task-del{
     position:absolute; right:4px; top:4px; width:18px; height:18px; border-radius:5px; border:none;
-    background:transparent; color:var(--muted); font-size:13px; line-height:18px; cursor:pointer; opacity:0;
+    background:transparent; color:var(--muted); font-size:13px; line-height:18px; cursor:pointer; opacity:.55;
   }
   tr.task-row:hover .task-del{ opacity:1; }
   .task-del:hover{ background:var(--late-bg); color:var(--late-ink); }
   .note-del{
     position:absolute; right:4px; bottom:2px; width:16px; height:16px; border-radius:5px; border:none;
-    background:transparent; color:var(--muted); font-size:11px; line-height:16px; cursor:pointer; opacity:0;
+    background:transparent; color:var(--muted); font-size:11px; line-height:16px; cursor:pointer; opacity:.55;
   }
   tr.task-row:hover .note-del{ opacity:1; }
   .note-del:hover{ background:var(--late-bg); color:var(--late-ink); }
@@ -453,22 +468,24 @@ const PHASES = [
   { key:'f2', name:'Fase 2 — Desarrollo Toku', header:'#00695C', bg:'#E8F5F3', tasks:[
     {n:7, t:'Fix: redirigir a vista de "banco no disponible" ante query param inválido', r:'Dev Toku', e:'Pendiente', s1:1, s2:2},
     {n:8, t:'Pulir el flujo de activación y redirección', r:'Dev Toku', e:'Pendiente', s1:1, s2:2},
+    {n:9, t:'Compartir con CAT la base de clientes ya activados', r:'Dev Toku', e:'Pendiente', s1:1, s2:2, note:'Permite que CAT muestre directamente los botones de Toku a esos clientes'},
   ]},
   { key:'f3', name:'Fase 3 — Desarrollo CAT', header:'#072642', bg:'#E7ECF2', tasks:[
-    {n:9, t:'Actualizar el frontend/checkout para exponer el flujo de botones bancarios', r:'Dev CAT', e:'Pendiente', s1:1, s2:2},
-    {n:10, t:'Agregar query param con el banco a la URL (ej. "/cl_banco_de_chile")', r:'Dev CAT', e:'Pendiente', s1:1, s2:1},
+    {n:10, t:'Actualizar el frontend/checkout para exponer el flujo de botones bancarios', r:'Dev CAT', e:'Pendiente', s1:1, s2:2},
+    {n:11, t:'Agregar query param con el banco a la URL (ej. "/cl_banco_de_chile")', r:'Dev CAT', e:'Pendiente', s1:1, s2:1},
+    {n:12, t:'Manejar clientes no activados: mostrar Servipag sobre cierto monto', r:'Dev CAT', e:'Pendiente', s1:1, s2:2, note:'Guardar el estado "activado en Toku" en la cuenta del cliente (metadata o columna nueva)'},
   ]},
   { key:'f4', name:'Fase 4 — Pruebas Integradas', header:'#BF5A00', bg:'#FFF4E6', tasks:[
-    {n:11, t:'Plan de pruebas E2E por banco', r:'QA Toku + CAT', e:'Pendiente', s1:3, s2:3},
-    {n:12, t:'Prueba: feedback de banco no disponible (simular caída)', r:'QA Toku + Dev CAT', e:'Pendiente', s1:3, s2:3},
-    {n:13, t:'Prueba: modal de activación con monto máximo', r:'QA Toku', e:'Pendiente', s1:3, s2:3},
-    {n:14, t:'Corrección de bugs post-pruebas', r:'Dev Toku + Dev CAT', e:'Pendiente', s1:3, s2:4},
+    {n:13, t:'Plan de pruebas E2E por banco', r:'QA Toku + CAT', e:'Pendiente', s1:3, s2:3},
+    {n:14, t:'Prueba: feedback de banco no disponible (simular caída)', r:'QA Toku + Dev CAT', e:'Pendiente', s1:3, s2:3},
+    {n:15, t:'Prueba: modal de activación con monto máximo', r:'QA Toku', e:'Pendiente', s1:3, s2:3},
+    {n:16, t:'Corrección de bugs post-pruebas', r:'Dev Toku + Dev CAT', e:'Pendiente', s1:3, s2:4},
   ]},
   { key:'f5', name:'Fase 5 — Demo & Go Live', header:'#2E7D32', bg:'#EBF5EB', tasks:[
-    {n:15, t:'Demo final a CAT — validación de flujo completo', r:'PM Toku + CAT', e:'Pendiente', s1:4, s2:4},
-    {n:16, t:'Sign-off de CAT para paso a producción', r:'PM Toku + CAT', e:'Pendiente', s1:4, s2:4},
-    {n:17, t:'Go Live — activación de botones bancarios en producción', r:'PM Toku + Dev Toku', e:'Pendiente', s1:4, s2:4},
-    {n:18, t:'Monitoreo post Go Live', r:'SA Toku', e:'Pendiente', s1:4, s2:5},
+    {n:17, t:'Demo final a CAT — validación de flujo completo', r:'PM Toku + CAT', e:'Pendiente', s1:4, s2:4},
+    {n:18, t:'Sign-off de CAT para paso a producción', r:'PM Toku + CAT', e:'Pendiente', s1:4, s2:4},
+    {n:19, t:'Go Live — activación de botones bancarios en producción', r:'PM Toku + Dev Toku', e:'Pendiente', s1:4, s2:4},
+    {n:20, t:'Monitoreo post Go Live', r:'SA Toku', e:'Pendiente', s1:4, s2:5},
   ]},
 ];
 // ── fin de la sección DATA — todo lo de abajo es genérico ───────────────────
@@ -527,6 +544,7 @@ function loadState(){
 let state = loadState();
 let activeFilter = null;
 let dragState = null;
+let rowDragTaskId = null;
 let openPopoverTaskId = null;
 let peopleById = new Map();
 const taskIndex = new Map(); // taskId -> { task, phase, row }
@@ -537,6 +555,25 @@ function persist(){
 
 function maxTaskId(){
   return state.phases.flatMap(p => p.tasks).reduce((m, t) => Math.max(m, t.n), 0);
+}
+
+function moveTask(taskId, targetPhaseKey, insertBeforeTaskId){
+  let task = null;
+  state.phases.forEach(p => {
+    const idx = p.tasks.findIndex(t => t.n === taskId);
+    if (idx !== -1) task = p.tasks.splice(idx, 1)[0];
+  });
+  if (!task) return;
+  const targetPhase = state.phases.find(p => p.key === targetPhaseKey);
+  if (!targetPhase) return;
+  const insertIdx = insertBeforeTaskId == null
+    ? targetPhase.tasks.length
+    : targetPhase.tasks.findIndex(t => t.n === insertBeforeTaskId);
+  targetPhase.tasks.splice(insertIdx === -1 ? targetPhase.tasks.length : insertIdx, 0, task);
+}
+
+function clearDropIndicators(){
+  document.querySelectorAll('.drop-indicator').forEach(el => el.classList.remove('drop-indicator'));
 }
 
 function fmtDate(d){ return d.toLocaleDateString('es-CL', {day:'2-digit', month:'2-digit'}); }
@@ -633,19 +670,19 @@ function render(){
       + `<td class="sticky-col col-num" style="background:${phase.header}"></td>`
       + `<td class="sticky-col col-task" style="background:${phase.header}" colspan="3">▸ `
       + `<span class="phase-name" contenteditable="true" data-field="name">${esc(phase.name)}</span>`
-      + `<button class="phase-del" type="button" data-phase-key="${esc(phase.key)}" title="Eliminar fase">×</button>`
+      + `<button class="phase-del" type="button" data-phase-key="${esc(phase.key)}" title="Eliminar fase">🗑</button>`
       + `</td>`
       + Array.from({length: state.meta.numSemanas}).map(() => `<td style="background:${phase.header}"></td>`).join('')
       + '</tr>';
     phase.tasks.forEach(task => {
       const statusClass = task.e.replace(' ', '');
-      tbody += `<tr class="task-row${task.e === 'Atrasado' ? ' is-Atrasado' : ''}" data-task-id="${task.n}" data-status="${task.e}">`
-        + `<td class="sticky-col col-num">${task.n}</td>`
+      tbody += `<tr class="task-row${task.e === 'Atrasado' ? ' is-Atrasado' : ''}" data-task-id="${task.n}" data-status="${task.e}" data-phase-key="${esc(phase.key)}">`
+        + `<td class="sticky-col col-num"><span class="row-num">${task.n}</span><span class="row-drag-handle" draggable="true" title="Arrastrar para reordenar">⠿</span></td>`
         + `<td class="sticky-col col-task">`
         + `<span class="task-text" contenteditable="true" data-field="t">${esc(task.t)}</span>`
         + `<span class="task-note" contenteditable="true" data-field="note">${esc(task.note || '')}</span>`
-        + (task.note ? `<button class="note-del" type="button" title="Eliminar comentario">×</button>` : '')
-        + `<button class="task-del" type="button" title="Eliminar tarea">×</button>`
+        + (task.note ? `<button class="note-del" type="button" title="Eliminar comentario">🗑</button>` : '')
+        + `<button class="task-del" type="button" title="Eliminar tarea">🗑</button>`
         + `</td>`
         + `<td class="sticky-col col-resp"><div class="assignee-cell" data-task-id="${task.n}">`
         + assigneeChipsHTML(task)
@@ -663,7 +700,7 @@ function render(){
           }).join('')
         + '</tr>';
     });
-    tbody += `<tr class="add-row"><td class="sticky-col col-num"></td>`
+    tbody += `<tr class="add-row" data-phase-key="${esc(phase.key)}"><td class="sticky-col col-num"></td>`
       + `<td class="sticky-col col-task" colspan="3"><button class="add-task-btn" type="button" data-phase="${esc(phase.key)}">+ Agregar tarea</button></td>`
       + Array.from({length: state.meta.numSemanas}).map(() => '<td></td>').join('')
       + '</tr>';
@@ -795,6 +832,57 @@ function attachRowHandlers(){
     state.phases.push({ key: 'custom' + state.nextPhaseSeq, name: 'Nueva fase', header: color.header, bg: color.bg, tasks: [] });
     persist();
     render();
+  });
+
+  document.querySelectorAll('.row-drag-handle').forEach(handle => {
+    handle.addEventListener('dragstart', (ev) => {
+      const row = handle.closest('.task-row');
+      rowDragTaskId = Number(row.dataset.taskId);
+      ev.dataTransfer.effectAllowed = 'move';
+      ev.dataTransfer.setData('text/plain', String(rowDragTaskId));
+      row.classList.add('dragging');
+    });
+    handle.addEventListener('dragend', () => {
+      rowDragTaskId = null;
+      document.querySelectorAll('.task-row.dragging').forEach(r => r.classList.remove('dragging'));
+      clearDropIndicators();
+    });
+  });
+
+  document.querySelectorAll('tr.task-row, tr.add-row').forEach(row => {
+    row.addEventListener('dragover', (ev) => {
+      if (rowDragTaskId == null) return;
+      ev.preventDefault();
+      ev.dataTransfer.dropEffect = 'move';
+      clearDropIndicators();
+      row.classList.add('drop-indicator');
+    });
+    row.addEventListener('drop', (ev) => {
+      if (rowDragTaskId == null) return;
+      ev.preventDefault();
+      let targetPhaseKey, insertBeforeTaskId;
+      if (row.classList.contains('add-row')) {
+        targetPhaseKey = row.dataset.phaseKey;
+        insertBeforeTaskId = null;
+      } else {
+        targetPhaseKey = row.dataset.phaseKey;
+        const rect = row.getBoundingClientRect();
+        const dropBelow = ev.clientY > rect.top + rect.height / 2;
+        if (!dropBelow) {
+          insertBeforeTaskId = Number(row.dataset.taskId);
+        } else {
+          const next = row.nextElementSibling;
+          insertBeforeTaskId = (next && next.classList.contains('task-row') && next.dataset.phaseKey === targetPhaseKey)
+            ? Number(next.dataset.taskId)
+            : null;
+        }
+      }
+      if (Number(row.dataset.taskId) === rowDragTaskId) { clearDropIndicators(); return; }
+      moveTask(rowDragTaskId, targetPhaseKey, insertBeforeTaskId);
+      rowDragTaskId = null;
+      persist();
+      render();
+    });
   });
 
   document.querySelectorAll('.gantt-chip').forEach(chip => {
