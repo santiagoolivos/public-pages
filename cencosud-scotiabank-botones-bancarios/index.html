@@ -153,6 +153,20 @@
   .bb-shot img{ display:block; width:100%; height:auto; border:1px solid var(--bb-line); border-radius:10px; box-shadow:0 1px 4px rgba(33,25,52,.08); }
   .bb-shot-cap{ font-size:11.5px; color:var(--bb-muted); line-height:1.45; }
   .bb-shot-cap b{ color:var(--bb-ink); }
+
+  /* ---- bloque "no son excluyentes" ---- */
+  .bb-elige{ border:2px solid var(--bb-good); border-radius:16px; background:var(--bb-good-soft); padding:22px 20px; margin-top:6px; }
+  .bb-elige-title{ font-size:16.5px; font-weight:800; color:var(--bb-good); text-align:center; margin-bottom:16px; text-wrap:balance; }
+  .bb-elige-steps{ display:grid; grid-template-columns:1fr auto 1fr; gap:14px; align-items:stretch; }
+  @media (max-width:640px){ .bb-elige-steps{ grid-template-columns:1fr; } .bb-elige-arrow{ transform:rotate(90deg); justify-self:center; } }
+  .bb-elige-step{ background:var(--bb-paper); border:1px solid var(--bb-line); border-radius:12px; padding:15px 16px; }
+  .bb-elige-badge{ display:inline-block; font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.05em; padding:3px 10px; border-radius:999px; background:var(--bb-good-soft); color:var(--bb-good); margin-bottom:9px; }
+  .bb-elige-badge.next{ background:var(--bb-toku-soft); color:var(--bb-toku); }
+  .bb-elige-h{ font-size:15px; font-weight:800; margin-bottom:5px; }
+  .bb-elige-b{ font-size:12.5px; line-height:1.5; color:var(--bb-muted); }
+  .bb-elige-arrow{ font-size:26px; font-weight:700; color:var(--bb-good); align-self:center; }
+  .bb-elige-foot{ font-size:13px; line-height:1.55; color:var(--bb-ink); text-align:center; margin-top:16px; }
+  .bb-elige-foot b{ color:var(--bb-good); }
 </style>
 
 <nav class="bb-nav">
@@ -347,7 +361,23 @@
         </div>
       </div>
 
-      <div class="bb-callout"><b>No son excluyentes:</b> la Opción 1 es la base de la Opción 2. Lo recomendado es hacer la Opción 1 como <b>fase inicial</b> (los 3 botones redirigiendo a Toku → ahorro inmediato) y luego seguir con los 9 botones y el respaldo Servipag para clientes no activados.</div>
+      <div class="bb-elige">
+        <div class="bb-elige-title">Las dos opciones no son excluyentes — son fases del mismo camino</div>
+        <div class="bb-elige-steps">
+          <div class="bb-elige-step">
+            <span class="bb-elige-badge">Fase inicial</span>
+            <div class="bb-elige-h">Opción 1</div>
+            <div class="bb-elige-b">Los 3 botones bancarios redirigiendo a Toku. Ahorro inmediato y el único desarrollo de CAT es el link.</div>
+          </div>
+          <div class="bb-elige-arrow">→</div>
+          <div class="bb-elige-step">
+            <span class="bb-elige-badge next">Luego</span>
+            <div class="bb-elige-h">Opción 2</div>
+            <div class="bb-elige-b">Los 9 botones + backend de "cliente activado" + respaldo Servipag. Experiencia unificada y máximo ahorro.</div>
+          </div>
+        </div>
+        <div class="bb-elige-foot">La Opción 1 <b>siempre es el primer paso</b>: se puede lanzar sola y seguir después con la Opción 2, o hacer ambas de corrido. En los dos casos <b>suman y bajan costos</b> — no hay que elegir una descartando la otra.</div>
+      </div>
 
     </div>
   </div>
